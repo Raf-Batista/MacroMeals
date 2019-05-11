@@ -48,5 +48,6 @@ bower.json
 node_modules/
 
 notes.md
+.env
 # Ignore master key for decrypting credentials and more.
 /config/master.key
