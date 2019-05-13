@@ -47,9 +47,9 @@ bower.json
 # Ignore node_modules
 node_modules/
 
+# Ignore master key for decrypting credentials and more.
+/config/master.key
+
 notes.md
 .env
 vendor/bundle
-
-# Ignore master key for decrypting credentials and more.
-/config/master.key
