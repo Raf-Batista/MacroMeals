@@ -1,20 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe 'User, model', type: :model do
-  it 'has valid attributes' do
-    expect(User.new(:email => 'test@example.com', :username => 'test', :password => 'test123').valid?).to eq (true)
-  end
+RSpec.describe User, type: :model do
+  it {should validate_presence_of(:email).on(:create)}
 
-  it 'is invalid without an email' do
-    expect(User.new(:username => 'test', :password => 'test123').valid?).to eq (false)
-  end
+  it {should validate_presence_of(:username).on(:create)}
 
-  it 'is invalid without a username' do
-    expect(User.new(:email => 'test@example.com', :password => 'test123').valid?).to eq (false)
+  it {should validate_presence_of(:password).on(:create)}
 
-  end
-
-  it 'is invalid without a password' do
-    expect(User.new(:email => 'test@example.com', :username => 'test').valid?).to eq (false)
-  end
+  it {should have_many(:recipes)}
 end
