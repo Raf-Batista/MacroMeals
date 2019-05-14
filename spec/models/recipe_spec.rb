@@ -1,8 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe Recipe, type: :model do
-  it {should validate_presence_of(:name).on(:create)}
-  it {should validate_presence_of(:directions).on(:create)}
+  it do
+    should validate_presence_of(:name).
+      with_message('Your Recipe needs to have a name')
+  end
+  it do
+    should validate_presence_of(:directions).
+      with_message('Your Recipe needs to have directions')
+  end
+
 
   it 'should display the macros for a recipe' do
     recipe = Recipe.new(:name => 'Protien Shake', :protien => 25, :carbs => '2', :fat => 0)
@@ -10,4 +17,5 @@ RSpec.describe Recipe, type: :model do
   end
 
   it {should have_many(:items)}
+
 end
