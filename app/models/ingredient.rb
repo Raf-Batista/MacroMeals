@@ -1,4 +1,4 @@
 class Ingredient < ApplicationRecord
-  has_many :items
-  has_many :recipes, :through => :items
+  belongs_to :recipe
+  belongs_to :item
 end
