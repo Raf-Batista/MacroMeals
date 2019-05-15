@@ -5,4 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: %i[facebook]
   validates :username, :presence => true
   has_many :recipes
+  has_many :recipe_ratings
 end
