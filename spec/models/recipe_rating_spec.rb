@@ -8,8 +8,11 @@ RSpec.describe RecipeRating, type: :model do
     rating.user = User.new(:email => 'test@email.com', :username => 'test', :password => 'test123')
     expect(rating.valid?).to eq(false)
   end
-  it 'should not have a greater than 5' do
-
+  it 'should not have a rating greater than 5' do
+    rating = RecipeRating.new(:rating => 6)
+    rating.recipe = Recipe.new(:name => 'test', :directions => 'test')
+    rating.user = User.new(:email => 'test@email.com', :username => 'test', :password => 'test123')
+    expect(rating.valid?).to eq(false)
   end
 
 end
