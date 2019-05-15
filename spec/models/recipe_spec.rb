@@ -18,4 +18,6 @@ RSpec.describe Recipe, type: :model do
 
   it {should have_many(:items)}
 
+  it {should have_many(:recipe_ratings)}
+
 end

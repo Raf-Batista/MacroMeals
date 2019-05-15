@@ -4,6 +4,7 @@ class Recipe < ApplicationRecord
   belongs_to :user
   has_many :ingredients
   has_many :items, :through => :ingredients
+  has_many :recipe_ratings
 
   def macros
     "protien: #{self.protien}g carbs: #{self.carbs}g fat: #{self.fat}g"
