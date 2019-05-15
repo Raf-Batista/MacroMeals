@@ -13,9 +13,5 @@ RSpec.describe Ingredient, type: :model do
     ingredient.item = Item.new(:name => 'Test')
     expect(ingredient.valid?).to eq(false)
   end
-  it do
-    should validate_presence_of(:metric).
-      with_message("Metric must be either gram, cup, or oz")
-  end
 
 end
