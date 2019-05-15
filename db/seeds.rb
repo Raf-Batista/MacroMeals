@@ -18,4 +18,7 @@ keto_king.save
 
 another_user = User.create(:email => 'user@email.com', :username => 'another_user', :password => 'user123')
 another_user.recipe_ratings.build(recipe_id: keto_king.recipes.last.id, rating: 4)
+user = User.create(email: 'something@example.com', username: 'test_username', password: 'test123')
+user.recipe_ratings.build(recipe_id: Recipe.last.id, rating: 3)
+user.save
 another_user.save

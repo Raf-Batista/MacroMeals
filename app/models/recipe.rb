@@ -9,4 +9,9 @@ class Recipe < ApplicationRecord
   def macros
     "protien: #{self.protien}g carbs: #{self.carbs}g fat: #{self.fat}g"
   end
+
+  def avg_rating
+    recipe_ratings.average(:rating).to_f
+  end
+
 end
