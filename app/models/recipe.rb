@@ -11,7 +11,8 @@ class Recipe < ApplicationRecord
   end
 
   def avg_rating
-    recipe_ratings.average(:rating).to_f
+    avg =  recipe_ratings.average(:rating)
+    avg.to_f if avg
   end
 
 end
