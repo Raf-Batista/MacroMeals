@@ -8,4 +8,10 @@ RSpec.describe Item, type: :model do
     2.times { Item.create(:name => 'Egg') }
     expect(Item.count).to eq(1)
   end
+
+  it 'should ignore case when creating items' do
+    Item.create(:name => 'Egg')
+    Item.create(:name => 'egg')
+    expect(Item.count).to eq(1)
+  end
 end
