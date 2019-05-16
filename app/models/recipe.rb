@@ -15,4 +15,7 @@ class Recipe < ApplicationRecord
     avg.to_f if avg
   end
 
+  def self.highest_rating
+
+  end
 end

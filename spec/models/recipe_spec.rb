@@ -16,22 +16,49 @@ RSpec.describe Recipe, type: :model do
     expect(recipe.macros).to eq("protien: 25g carbs: 2g fat: 0g")
   end
 
-  it 'should return the average when #avg_rating is called' do
-    User.create(:email => 'test@email.com', :username => 'test', :password => 'test123').recipes.
-      build(:name => 'Recipe', :directions => 'Directions').save
-    User.create(:email => 'user@email.com', :username => 'another_user', :password => 'user123').
-      recipe_ratings.build(recipe_id: Recipe.last.id, rating: 4).save
-    User.create(:email => 'user2@email.com', :username => 'another_user2', :password => 'user123').
-      recipe_ratings.build(recipe_id: Recipe.last.id, rating: 3).save
+  context '#avg_rating' do
 
-    expect(Recipe.last.avg_rating).to eq(3.5)
+    it 'should return the average' do
+      User.create(:email => 'test@email.com', :username => 'test', :password => 'test123').recipes.
+        build(:name => 'Recipe', :directions => 'Directions').save
+      User.create(:email => 'user@email.com', :username => 'another_user', :password => 'user123').
+        recipe_ratings.build(recipe_id: Recipe.last.id, rating: 4).save
+      User.create(:email => 'user2@email.com', :username => 'another_user2', :password => 'user123').
+        recipe_ratings.build(recipe_id: Recipe.last.id, rating: 3).save
+
+      expect(Recipe.last.avg_rating).to eq(3.5)
+    end
+
+    it 'returns nil if a recipe has no ratings' do
+      User.create(:email => 'test@email.com', :username => 'test', :password => 'test123').recipes.
+        build(:name => 'Recipe', :directions => 'Directions').save
+      expect(Recipe.last.avg_rating).to eq(nil)
+    end
+
   end
 
-  it 'returns nil if a recipe has no ratings' do
-    User.create(:email => 'test@email.com', :username => 'test', :password => 'test123').recipes.
-      build(:name => 'Recipe', :directions => 'Directions').save
-    expect(Recipe.last.avg_rating).to eq(nil)
+  context '.highest_rating' do
+    it 'should return the recipe with the highest average rating' do
+      User.create(:email => 'test@email.com', :username => 'test', :password => 'test123').recipes.
+        build(:name => 'Recipe', :directions => 'Directions').save
+      User.create(:email => 'user@email.com', :username => 'another_user', :password => 'user123').
+        recipe_ratings.build(recipe_id: Recipe.last.id, rating: 4).save
+      User.create(:email => 'user2@email.com', :username => 'another_user2', :password => 'user123').
+        recipe_ratings.build(recipe_id: Recipe.last.id, rating: 3).save
+
+      User.create(:email => 'test2@email.com', :username => 'test', :password => 'test123').recipes.
+        build(:name => 'Recipe2', :directions => 'Directions').save
+      User.create(:email => 'user3@email.com', :username => 'another_user3', :password => 'user123').
+        recipe_ratings.build(recipe_id: Recipe.last.id, rating: 5).save
+      User.create(:email => 'user4@email.com', :username => 'another_user4', :password => 'user123').
+        recipe_ratings.build(recipe_id: Recipe.last.id, rating: 5).save
+
+        expect(Recipe.highest_rating).to eq(Recipe.last)
+    end
   end
+
+
+
 
   it {should have_many(:items)}
 
