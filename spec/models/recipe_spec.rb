@@ -70,11 +70,13 @@ RSpec.describe Recipe, type: :model do
     it 'returns recipes ordered by max protien' do
       user = User.create(:email => 'test@email.com', :username => 'test', :password => 'test123')
       user.recipes.build(:name => 'Recipe1', :directions => 'directions', :protien => 30).save
-      user.recipes.build(:name => 'Recipe2', :directions => 'directions', :protien => 20).save
       user.recipes.build(:name => 'Recipe2', :directions => 'directions', :protien => 10).save
-      #binding.pry
+      user.recipes.build(:name => 'Recipe3', :directions => 'directions', :protien => 45).save
+      user.recipes.build(:name => 'Recipe4', :directions => 'directions', :protien => 20).save
+      user.recipes.build(:name => 'Recipe5', :directions => 'directions', :protien => 10).save
 
-      expect(Recipe.max_protien.first).to eq(Recipe.find_by(:name => 'Recipe1'))
+      expect(Recipe.max_protien.first).to eq(Recipe.find_by(:name => 'Recipe3'))
+      expect(Recipe.max_protien[1]).to eq(Recipe.find_by(:name => 'Recipe1'))
     end
   end
 

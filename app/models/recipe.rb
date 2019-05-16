@@ -7,7 +7,7 @@ class Recipe < ApplicationRecord
   has_many :recipe_ratings
 
   scope :ten_minute_meals, lambda { where('cook_time <= ?', 10) }
-  scope :max_protien, lambda { where(:protien => Recipe.maximum('protien')) }
+  scope :max_protien, lambda { Recipe.order(:protien => :desc) }
   scope :max_carbs, lambda { select('MAX(carbs)') }
   scope :max_fat, lambda { select('MAX(fat)') }
 
