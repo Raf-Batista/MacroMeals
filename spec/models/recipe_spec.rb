@@ -5,6 +5,12 @@ RSpec.describe Recipe, type: :model do
     should validate_presence_of(:name).
       with_message('Your Recipe needs to have a name')
   end
+
+  it 'should have a unique name' do
+    user = User.create(:email => 'test@email.com', :username => 'test', :password => 'test123')
+    user.recipes.build(:name => 'Recipe', :directions => 'Directions').save
+    expect(Recipe.new(:user_id => user.id, :name => 'Recipe', :directions => 'Directions').valid?).to eq(false)
+  end
   it do
     should validate_presence_of(:directions).
       with_message('Your Recipe needs to have directions')
