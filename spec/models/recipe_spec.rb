@@ -9,7 +9,7 @@ RSpec.describe Recipe, type: :model do
   it 'should have a unique name' do
     user = User.create(:email => 'test@email.com', :username => 'test', :password => 'test123')
     user.recipes.build(:name => 'Recipe', :directions => 'Directions').save
-    expect(Recipe.new(:user_id => user.id, :name => 'Recipe', :directions => 'Directions').valid?).to eq(false)
+    expect(Recipe.create(:user_id => user.id, :name => 'Recipe', :directions => 'Directions').valid?).to eq(false)
   end
   it do
     should validate_presence_of(:directions).
@@ -68,7 +68,7 @@ RSpec.describe Recipe, type: :model do
       user = User.create(:email => 'test@email.com', :username => 'test', :password => 'test123')
       user.recipes.build(:name => 'Recipe1', :directions => 'directions', :cook_time => 15).save
       user.recipes.build(:name => 'Recipe2', :directions => 'directions', :cook_time => 10).save
-      user.recipes.build(:name => 'Recipe2', :directions => 'directions', :cook_time => 8).save
+      user.recipes.build(:name => 'Recipe3', :directions => 'directions', :cook_time => 8).save
 
       expect(Recipe.ten_minute_meals.count).to eq(2)
     end
