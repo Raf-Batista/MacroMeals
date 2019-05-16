@@ -66,6 +66,16 @@ RSpec.describe Recipe, type: :model do
 
       expect(Recipe.ten_minute_meals.count).to eq(2)
     end
+
+    it 'returns recipes ordered by max protien' do
+      user = User.create(:email => 'test@email.com', :username => 'test', :password => 'test123')
+      user.recipes.build(:name => 'Recipe1', :directions => 'directions', :protien => 30).save
+      user.recipes.build(:name => 'Recipe2', :directions => 'directions', :protien => 20).save
+      user.recipes.build(:name => 'Recipe2', :directions => 'directions', :protien => 10).save
+      #binding.pry
+
+      expect(Recipe.max_protien.first).to eq(Recipe.find_by(:name => 'Recipe1'))
+    end
   end
 
   it {should have_many(:items)}
