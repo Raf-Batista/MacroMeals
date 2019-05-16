@@ -60,9 +60,9 @@ RSpec.describe Recipe, type: :model do
   context 'scope methods' do
     it 'returns all recipes where the cook time is 10 minutes or less' do
       user = User.create(:email => 'test@email.com', :username => 'test', :password => 'test123')
-      user.recipes.build(:name => 'Recipe1', :directions => 'directions', :cook => 15).save
-      user.recipes.build(:name => 'Recipe2', :directions => 'directions', :cook => 10).save
-      user.recipes.build(:name => 'Recipe2', :directions => 'directions', :cook => 8).save
+      user.recipes.build(:name => 'Recipe1', :directions => 'directions', :cook_time => 15).save
+      user.recipes.build(:name => 'Recipe2', :directions => 'directions', :cook_time => 10).save
+      user.recipes.build(:name => 'Recipe2', :directions => 'directions', :cook_time => 8).save
 
       expect(Recipe.ten_minute_meals.count).to eq(2)
     end

@@ -6,7 +6,7 @@ class Recipe < ApplicationRecord
   has_many :items, :through => :ingredients
   has_many :recipe_ratings
 
-  scope :ten_minute_meals, lambda { where('cook <= ?', 10) }
+  scope :ten_minute_meals, lambda { where('cook_time <= ?', 10) }
   scope :max_protien, lambda { select('MAX(protien)') }
   scope :max_carbs, lambda { select('MAX(carbs)') }
   scope :max_fat, lambda { select('MAX(fat)') }
