@@ -8,8 +8,8 @@ class Recipe < ApplicationRecord
 
   scope :ten_minute_meals, lambda { where('cook_time <= ?', 10) }
   scope :max_protien, lambda { Recipe.order(:protien => :desc) }
-  scope :max_carbs, lambda { select('MAX(carbs)') }
-  scope :max_fat, lambda { select('MAX(fat)') }
+  scope :max_carbs, lambda { Recipe.order(:carbs => :desc) }
+  scope :max_fat, lambda { Recipe.order(:fat => :desc) }
 
   def macros
     "protien: #{self.protien}g carbs: #{self.carbs}g fat: #{self.fat}g"

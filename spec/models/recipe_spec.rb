@@ -78,6 +78,28 @@ RSpec.describe Recipe, type: :model do
       expect(Recipe.max_protien.first).to eq(Recipe.find_by(:name => 'Recipe3'))
       expect(Recipe.max_protien[1]).to eq(Recipe.find_by(:name => 'Recipe1'))
     end
+    it 'returns recipes ordered by max carbs' do
+      user = User.create(:email => 'test@email.com', :username => 'test', :password => 'test123')
+      user.recipes.build(:name => 'Recipe1', :directions => 'directions', :carbs => 23).save
+      user.recipes.build(:name => 'Recipe2', :directions => 'directions', :carbs => 10).save
+      user.recipes.build(:name => 'Recipe3', :directions => 'directions', :carbs => 45).save
+      user.recipes.build(:name => 'Recipe4', :directions => 'directions', :carbs => 85).save
+      user.recipes.build(:name => 'Recipe5', :directions => 'directions', :carbs => 10).save
+
+      expect(Recipe.max_carbs.first).to eq(Recipe.find_by(:name => 'Recipe4'))
+      expect(Recipe.max_carbs[1]).to eq(Recipe.find_by(:name => 'Recipe3'))
+    end
+    it 'returns recipes ordered by max fat' do
+      user = User.create(:email => 'test@email.com', :username => 'test', :password => 'test123')
+      user.recipes.build(:name => 'Recipe1', :directions => 'directions', :fat => 7).save
+      user.recipes.build(:name => 'Recipe2', :directions => 'directions', :fat => 22).save
+      user.recipes.build(:name => 'Recipe3', :directions => 'directions', :fat => 4).save
+      user.recipes.build(:name => 'Recipe4', :directions => 'directions', :fat => 30).save
+      user.recipes.build(:name => 'Recipe5', :directions => 'directions', :fat => 15).save
+
+      expect(Recipe.max_fat.first).to eq(Recipe.find_by(:name => 'Recipe4'))
+      expect(Recipe.max_fat[1]).to eq(Recipe.find_by(:name => 'Recipe2'))
+    end
   end
 
   it {should have_many(:items)}
