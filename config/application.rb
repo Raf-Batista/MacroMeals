@@ -1,6 +1,5 @@
 require_relative 'boot'
 require 'rails/all'
-require 'devise'
 require 'omniauth'
 require 'omniauth-facebook'
 

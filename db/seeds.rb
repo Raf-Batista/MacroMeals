@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-keto_king = User.create(:email => 'keto@email.com', :username => 'Keto_king', :password => 'keto123')
+keto_king = User.create(:username => 'Keto_king', :password => 'keto123')
 keto_king.recipes.build(:name => 'Bacon and Eggs', :directions => 'Cook some bacon and eggs')
 bacon = Item.create(:name => 'Bacon')
 egg = Item.create(:name => 'Egg')
@@ -16,9 +16,9 @@ keto_king.save
 
 
 
-another_user = User.create(:email => 'user@email.com', :username => 'another_user', :password => 'user123')
+another_user = User.create(:username => 'another_user', :password => 'user123')
 another_user.recipe_ratings.build(recipe_id: keto_king.recipes.last.id, rating: 4)
-user = User.create(email: 'something@example.com', username: 'test_username', password: 'test123')
+user = User.create(username: 'test_username', password: 'test123')
 user.recipe_ratings.build(recipe_id: Recipe.last.id, rating: 3)
 user.save
 another_user.save

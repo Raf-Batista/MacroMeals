@@ -7,7 +7,7 @@ RSpec.describe Recipe, type: :model do
   end
 
   it 'should have a unique name' do
-    user = User.create(:email => 'test@email.com', :username => 'test', :password => 'test123')
+    user = User.create(:username => 'test', :password => 'test123')
     user.recipes.build(:name => 'Recipe', :directions => 'Directions').save
     expect(Recipe.create(:user_id => user.id, :name => 'Recipe', :directions => 'Directions').valid?).to eq(false)
   end
@@ -25,18 +25,18 @@ RSpec.describe Recipe, type: :model do
   context '#avg_rating' do
 
     it 'should return the average' do
-      User.create(:email => 'test@email.com', :username => 'test', :password => 'test123').recipes.
+      User.create(:username => 'test', :password => 'test123').recipes.
         build(:name => 'Recipe', :directions => 'Directions').save
-      User.create(:email => 'user@email.com', :username => 'another_user', :password => 'user123').
+      User.create(:username => 'another_user', :password => 'user123').
         recipe_ratings.build(recipe_id: Recipe.last.id, rating: 4).save
-      User.create(:email => 'user2@email.com', :username => 'another_user2', :password => 'user123').
+      User.create(:username => 'another_user2', :password => 'user123').
         recipe_ratings.build(recipe_id: Recipe.last.id, rating: 3).save
 
       expect(Recipe.last.avg_rating).to eq(3.5)
     end
 
     it 'returns nil if a recipe has no ratings' do
-      User.create(:email => 'test@email.com', :username => 'test', :password => 'test123').recipes.
+      User.create(:username => 'test', :password => 'test123').recipes.
         build(:name => 'Recipe', :directions => 'Directions').save
       expect(Recipe.last.avg_rating).to eq(nil)
     end
@@ -45,18 +45,18 @@ RSpec.describe Recipe, type: :model do
 
   context '.highest_rating' do
     it 'should return the recipe with the highest average rating' do
-      User.create(:email => 'test@email.com', :username => 'test', :password => 'test123').recipes.
+      User.create(:username => 'test', :password => 'test123').recipes.
         build(:name => 'Recipe', :directions => 'Directions').save
-      User.create(:email => 'user@email.com', :username => 'another_user', :password => 'user123').
+      User.create(:username => 'another_user', :password => 'user123').
         recipe_ratings.build(recipe_id: Recipe.last.id, rating: 4).save
-      User.create(:email => 'user2@email.com', :username => 'another_user2', :password => 'user123').
+      User.create(:username => 'another_user2', :password => 'user123').
         recipe_ratings.build(recipe_id: Recipe.last.id, rating: 3).save
 
-      User.create(:email => 'test2@email.com', :username => 'test', :password => 'test123').recipes.
+      User.create(:username => 'test', :password => 'test123').recipes.
         build(:name => 'Recipe2', :directions => 'Directions').save
-      User.create(:email => 'user3@email.com', :username => 'another_user3', :password => 'user123').
+      User.create(:username => 'another_user3', :password => 'user123').
         recipe_ratings.build(recipe_id: Recipe.last.id, rating: 5).save
-      User.create(:email => 'user4@email.com', :username => 'another_user4', :password => 'user123').
+      User.create(:username => 'another_user4', :password => 'user123').
         recipe_ratings.build(recipe_id: Recipe.last.id, rating: 5).save
 
         expect(Recipe.highest_rating).to eq(Recipe.last)
@@ -65,7 +65,7 @@ RSpec.describe Recipe, type: :model do
 
   context 'scope methods' do
     it 'returns all recipes where the cook time is 10 minutes or less' do
-      user = User.create(:email => 'test@email.com', :username => 'test', :password => 'test123')
+      user = User.create(:username => 'test', :password => 'test123')
       user.recipes.build(:name => 'Recipe1', :directions => 'directions', :cook_time => 15).save
       user.recipes.build(:name => 'Recipe2', :directions => 'directions', :cook_time => 10).save
       user.recipes.build(:name => 'Recipe3', :directions => 'directions', :cook_time => 8).save
@@ -74,7 +74,7 @@ RSpec.describe Recipe, type: :model do
     end
 
     it 'returns recipes ordered by max protien' do
-      user = User.create(:email => 'test@email.com', :username => 'test', :password => 'test123')
+      user = User.create(:username => 'test', :password => 'test123')
       user.recipes.build(:name => 'Recipe1', :directions => 'directions', :protien => 30).save
       user.recipes.build(:name => 'Recipe2', :directions => 'directions', :protien => 10).save
       user.recipes.build(:name => 'Recipe3', :directions => 'directions', :protien => 45).save
@@ -85,7 +85,7 @@ RSpec.describe Recipe, type: :model do
       expect(Recipe.max_protien[1]).to eq(Recipe.find_by(:name => 'Recipe1'))
     end
     it 'returns recipes ordered by max carbs' do
-      user = User.create(:email => 'test@email.com', :username => 'test', :password => 'test123')
+      user = User.create(:username => 'test', :password => 'test123')
       user.recipes.build(:name => 'Recipe1', :directions => 'directions', :carbs => 23).save
       user.recipes.build(:name => 'Recipe2', :directions => 'directions', :carbs => 10).save
       user.recipes.build(:name => 'Recipe3', :directions => 'directions', :carbs => 45).save
@@ -96,7 +96,7 @@ RSpec.describe Recipe, type: :model do
       expect(Recipe.max_carbs[1]).to eq(Recipe.find_by(:name => 'Recipe3'))
     end
     it 'returns recipes ordered by max fat' do
-      user = User.create(:email => 'test@email.com', :username => 'test', :password => 'test123')
+      user = User.create(:username => 'test', :password => 'test123')
       user.recipes.build(:name => 'Recipe1', :directions => 'directions', :fat => 7).save
       user.recipes.build(:name => 'Recipe2', :directions => 'directions', :fat => 22).save
       user.recipes.build(:name => 'Recipe3', :directions => 'directions', :fat => 4).save

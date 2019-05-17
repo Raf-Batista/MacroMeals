@@ -5,7 +5,6 @@ require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
-require 'devise'
 require 'capybara/rspec'
 require "rack_session_access/capybara"
 # Add additional requires below this line. Rails is not loaded until this point!
@@ -61,10 +60,6 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-  config.include Devise::Test::ControllerHelpers, :type => :controller
-   #config.include Devise::TestHelpers, :type => :controller
-  # config.include Devise::TestHelpers, :type => :view
-  # config.include Devise::Test::IntegrationHelpers, type: :feature
 end
 
 Shoulda::Matchers.configure do |config|
