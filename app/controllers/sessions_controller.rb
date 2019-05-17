@@ -14,8 +14,12 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    logout
-    redirect_to login_path, :flash => {:message => 'Logout Successful'}
+    if logged_in?
+      logout
+      redirect_to login_path, :flash => {:message => 'Logout Successful'}
+    else
+      redirect_to login_path, :flash => {:message => 'Can not log out, you are not logged in'}
+    end
   end
 
   private

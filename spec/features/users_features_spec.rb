@@ -34,6 +34,7 @@ RSpec.describe 'Users features', :type => :feature do
       expect(page).to have_content('You are already logged in')
     end
   end
+
   context 'Login' do
     it 'logs in Successfully' do
       User.create(:username => 'test', :password => 'test123')
@@ -68,22 +69,27 @@ RSpec.describe 'Users features', :type => :feature do
       visit login_path
       expect(page).to have_content('You are already logged in')
     end
-end
-  it 'Successfully logs out' do
-    visit login_path
-    fill_in 'username', :with => 'test'
-    fill_in 'password', :with => 'test123'
-    click_button 'Log In'
-    click_on 'Logout'
-    expect(page.get_rack_session['user_id']).to eq(nil)
-  end
-  it 'Displays logout message' do
-    visit login_path
-    fill_in 'username', :with => 'test'
-    fill_in 'password', :with => 'test123'
-    click_button 'Log In'
-    click_on 'Logout'
-    expect(page).to have_content('Logout Successful')
   end
 
+  context 'Log out' do
+    it 'Successfully logs out' do
+      visit login_path
+      fill_in 'username', :with => 'test'
+      fill_in 'password', :with => 'test123'
+      click_button 'Log In'
+      click_on 'Logout'
+      expect(page.get_rack_session['user_id']).to eq(nil)
+    end
+    it 'Displays logout message' do
+      user = User.create(:username => 'test', :password => 'test123')
+      page.set_rack_session(:user_id => user.id)
+      visit logout_path
+      expect(page).to have_content('Logout Successful')
+    end
+
+    it 'displays message if logged out' do
+      visit logout_path
+      expect(page).to have_content('Can not log out, you are not logged in')
+    end
+  end
 end
