@@ -7,6 +7,6 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', :to => 'sessions#create'
   get '/login', :to => 'sessions#new'
   post '/login', :to => 'sessions#create'
-  delete '/login', :to => 'sessions#delete'
+  get '/logout', :to => 'sessions#delete'
   root :to => 'static_pages#home'
 end
