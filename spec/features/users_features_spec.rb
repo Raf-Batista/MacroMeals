@@ -2,22 +2,31 @@ require 'rails_helper'
 
 
 RSpec.describe 'Users features', :type => :feature do
-  it 'signs up sucessfully' do
-    visit new_user_path
-    fill_in 'user[username]', :with => 'test'
-    fill_in 'user[password]', :with => 'test123'
-    click_button 'Sign Up'
-    expect(User.last.username).to eq('test')
-    expect(page).to have_content('Signed Up Successfully')
-    expect(page.current_path).to eq('/users/1')
-  end
+  context 'Sign Up' do
+    it 'signs up sucessfully' do
+      visit new_user_path
+      fill_in 'user[username]', :with => 'test'
+      fill_in 'user[password]', :with => 'test123'
+      click_button 'Sign Up'
+      expect(User.last.username).to eq('test')
+      expect(page).to have_content('Signed Up Successfully')
+      expect(page.current_path).to eq('/users/1')
+    end
 
-  it 'adds a session hash on Sign Up' do
-    visit new_user_path
-    fill_in 'user[username]', :with => 'test'
-    fill_in 'user[password]', :with => 'test123'
-    click_button 'Sign Up'
-    expect(page.get_rack_session['user_id']).to_not eq(nil)
+    it 'adds a session hash on Sign Up' do
+      visit new_user_path
+      fill_in 'user[username]', :with => 'test'
+      fill_in 'user[password]', :with => 'test123'
+      click_button 'Sign Up'
+      expect(page.get_rack_session['user_id']).to_not eq(nil)
+    end
+
+    it 'redirects to show page if logged in' do
+      user = User.create(:username => 'test', :password => 'test123')
+      page.set_rack_session(:user_id => user.id)
+      visit new_user_path
+      expect(page.current_path).to eq(user_path(user))
+    end
   end
 
   it 'logs in Successfully' do
