@@ -11,6 +11,7 @@
 
   <body>
     <%= link_to 'Sign in With Facebook', '/auth/facebook' %>
+    <%= link_to 'Logout', logout_path %>
     <% if flash[:message] %>
       <h2><%= flash[:message] %></h2>
     <% end %>

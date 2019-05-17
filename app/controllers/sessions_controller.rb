@@ -12,6 +12,11 @@ class SessionsController < ApplicationController
     end
   end
 
+  def destroy
+    logout
+    redirect_to login_path, :flash => {:message => 'Logout Successful'}
+  end
+
   private
 
   def auth

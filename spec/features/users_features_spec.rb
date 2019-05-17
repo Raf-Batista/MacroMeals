@@ -41,9 +41,19 @@ RSpec.describe 'Users features', :type => :feature do
   end
 
   it 'Successfully logs out' do
-    page.set_rack_session(:user_id => 1)
-    visit logout_path
+    visit login_path
+    fill_in 'username', :with => 'test'
+    fill_in 'password', :with => 'test123'
+    click_button 'Log In'
+    click_on 'Logout'
     expect(page.get_rack_session['user_id']).to eq(nil)
+  end
+  it 'Displays logout message' do
+    visit login_path
+    fill_in 'username', :with => 'test'
+    fill_in 'password', :with => 'test123'
+    click_button 'Log In'
+    click_on 'Logout'
     expect(page).to have_content('Logout Successful')
   end
 
