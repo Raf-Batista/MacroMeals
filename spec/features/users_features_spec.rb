@@ -61,6 +61,13 @@ RSpec.describe 'Users features', :type => :feature do
       visit login_path
       expect(page.current_path).to eq(user_path(user))
     end
+
+    it 'displays messsage if logged in' do
+      user = User.create(:username => 'test', :password => 'test123')
+      page.set_rack_session(:user_id => user.id)
+      visit login_path
+      expect(page).to have_content('You are already logged in')
+    end
 end
   it 'Successfully logs out' do
     visit login_path

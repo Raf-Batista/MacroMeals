@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   def new
-    logged_in? ? redirect_to(user_path(current_user)) : render(:new)
+    logged_in? ? redirect_to(user_path(current_user), :flash => {:message => 'You are already logged in'}) : render(:new)
   end
 
   def create
