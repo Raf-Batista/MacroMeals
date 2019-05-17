@@ -1,0 +1,35 @@
+<%= form_for [@user, @recipe] do |f|%>
+  <%= f.label :name, "Name:" %>
+  <%= f.text_field :name%>
+
+  <%= f.label :directions, "Directions:" %>
+  <%= f.text_area :directions%>
+
+  <%= f.label :prep_time, "Prep Time:" %>
+  <%= f.text_field :prep_time %>
+
+  <%= f.label :cook_time, "Cook Time:" %>
+  <%= f.text_field :cook_time %>
+
+  <%= f.label :protien, "Protien:" %>
+  <%= f.text_field :protien %>
+
+  <%= f.label :carbs, "Carbs:" %>
+  <%= f.text_field :carbs %>
+
+  <%= f.label :fat, "Fat:" %>
+  <%= f.text_field :fat %>
+
+
+    <label>Ingredient 1</label>
+    <input name="ingredient[name][]" id="ingredient1"></input>
+    <label>Quantity</label>
+    <input name="ingredient[quantity][]" id="quantity1"></input>
+    <label>Ingredient 1</label>
+    <input name="ingredient[name][]" id="ingredient2"></input>
+    <label>Quantity</label>
+    <input name="ingredient[quantity][]" id="quantity2"></input>
+
+
+  <%= f.submit "Create Recipe" %>
+<% end %>
