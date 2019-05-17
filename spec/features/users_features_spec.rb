@@ -22,9 +22,9 @@ RSpec.describe 'Users features', :type => :feature do
 
   it 'logs in Successfully' do
     User.create(:username => 'test', :password => 'test123')
-    visit new_session_path
-    fill_in 'user[username]', :with => 'test'
-    fill_in 'user[password]', :with => 'test123'
+    visit login_path
+    fill_in 'username', :with => 'test'
+    fill_in 'password', :with => 'test123'
     click_button 'Log In'
     expect(page).to have_content('Log in Successful')
     expect(page.current_path).to eq('/users/1')

@@ -4,7 +4,9 @@ Rails.application.routes.draw do
     resources :recipes
   end
   resources :recipes, :only => [:index, :show]
-  get '/auth/:provider/callback', to: 'sessions#create'
-  resources :sessions, :only => [:new, :create]
+  get '/auth/:provider/callback', :to => 'sessions#create'
+  get '/login', :to => 'sessions#new'
+  post '/login', :to => 'sessions#create'
+  delete '/login', :to => 'sessions#delete'
   root :to => 'static_pages#home'
 end
