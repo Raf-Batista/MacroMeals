@@ -28,27 +28,34 @@ RSpec.describe 'Users features', :type => :feature do
       expect(page.current_path).to eq(user_path(user))
     end
   end
+  context 'Login' do
+    it 'logs in Successfully' do
+      User.create(:username => 'test', :password => 'test123')
+      visit login_path
+      fill_in 'username', :with => 'test'
+      fill_in 'password', :with => 'test123'
+      click_button 'Log In'
+      expect(page).to have_content('Log in Successful')
+      expect(page.current_path).to eq('/users/1')
+    end
 
-  it 'logs in Successfully' do
-    User.create(:username => 'test', :password => 'test123')
-    visit login_path
-    fill_in 'username', :with => 'test'
-    fill_in 'password', :with => 'test123'
-    click_button 'Log In'
-    expect(page).to have_content('Log in Successful')
-    expect(page.current_path).to eq('/users/1')
-  end
+    it 'does not log in if password is incorrect' do
+      User.create(:username => 'test', :password => 'test123')
+      visit login_path
+      fill_in 'username', :with => 'test'
+      fill_in 'password', :with => 'wrong_password'
+      click_button 'Log In'
+      expect(page).to have_content('The email or password you entered was incorrect')
+      expect(page.current_path).to eq(login_path)
+    end
 
-  it 'does not log in if password is incorrect' do
-    User.create(:username => 'test', :password => 'test123')
-    visit login_path
-    fill_in 'username', :with => 'test'
-    fill_in 'password', :with => 'wrong_password'
-    click_button 'Log In'
-    expect(page).to have_content('The email or password you entered was incorrect')
-    expect(page.current_path).to eq(login_path)
-  end
-
+    it 'redirects to show page if logged in' do
+      user = User.create(:username => 'test', :password => 'test123')
+      page.set_rack_session(:user_id => user.id)
+      visit login_path
+      expect(page.current_path).to eq(user_path(user))
+    end
+end
   it 'Successfully logs out' do
     visit login_path
     fill_in 'username', :with => 'test'
