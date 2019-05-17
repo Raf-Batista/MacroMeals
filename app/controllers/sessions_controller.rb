@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   def new
+    logged_in? ? redirect_to(user_path(current_user)) : render(:new)
   end
 
   def create
