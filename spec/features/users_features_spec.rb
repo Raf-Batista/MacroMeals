@@ -92,4 +92,15 @@ RSpec.describe 'Users features', :type => :feature do
       expect(page).to have_content('Can not log out, you are not logged in')
     end
   end
+
+  context 'Creating recipes' do
+    it 'Successfully creates a recipe' do
+      user = User.create(:username => 'test', :password => 'test123')
+      visit new_user_recipe_path(user)
+      fill_in 'user[recipes][name]', :with => 'Test Recipe'
+      fill_in 'user[recipes][directions]', :with => 'Test Directions'
+      click_button 'Create Recipe'
+      expect(Recipe.count).to eq(1)
+    end
+  end
 end

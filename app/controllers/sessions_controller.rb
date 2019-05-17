@@ -6,7 +6,8 @@ class SessionsController < ApplicationController
   def create
     if auth
       user = User.from_omniauth(auth)
-      redirect_to user_path(user)
+      login(user)
+      redirect_to user_path(user), :flash => {:message => 'Log in Successful'}
     else
       user = User.find_by(:username => params[:username])
       user ? verify(user) : redirect_to(login_path, :flash => {:notice => 'The email or password you entered was incorrect'})
