@@ -148,6 +148,9 @@ GEM
     rack (2.0.7)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
+    rack_session_access (0.2.0)
+      builder (>= 2.0.0)
+      rack (>= 1.0.0)
     rails (5.2.3)
       actioncable (= 5.2.3)
       actionmailer (= 5.2.3)
@@ -184,10 +187,6 @@ GEM
     responders (2.4.1)
       actionpack (>= 4.2.0, < 6.0)
       railties (>= 4.2.0, < 6.0)
-    rspec (3.8.0)
-      rspec-core (~> 3.8.0)
-      rspec-expectations (~> 3.8.0)
-      rspec-mocks (~> 3.8.0)
     rspec-core (3.8.0)
       rspec-support (~> 3.8.0)
     rspec-expectations (3.8.3)
@@ -276,9 +275,9 @@ DEPENDENCIES
   omniauth-facebook
   pry
   puma (~> 3.11)
+  rack_session_access
   rails (~> 5.2.3)
   rails-controller-testing
-  rspec
   rspec-rails
   sass-rails (~> 5.0)
   selenium-webdriver

@@ -1,6 +1,6 @@
-require 'devise'
-require 'omniauth'
-require 'omniauth-facebook'
+#require 'devise'
+# require 'omniauth'
+# require 'omniauth-facebook'
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -8,6 +8,10 @@ Rails.application.configure do
   # test suite. You never need to work with it otherwise. Remember that
   # your test database is "scratch space" for the test suite and is wiped
   # and recreated between test runs. Don't rely on the data there!
+
+  # Access to rack session
+  config.middleware.use RackSessionAccess::Middleware
+  
   config.cache_classes = true
 
   # Do not eager load code on boot. This avoids loading your whole application
