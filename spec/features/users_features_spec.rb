@@ -30,4 +30,14 @@ RSpec.describe 'Users features', :type => :feature do
     expect(page.current_path).to eq('/users/1')
   end
 
+  it 'does not log in if password is incorrect' do
+    User.create(:username => 'test', :password => 'test123')
+    visit login_path
+    fill_in 'username', :with => 'test'
+    fill_in 'password', :with => 'wrong_password'
+    click_button 'Log In'
+    expect(page).to have_content('The email or password you entered was incorrect')
+    expect(page.current_path).to eq(login_path)
+  end
+
 end
