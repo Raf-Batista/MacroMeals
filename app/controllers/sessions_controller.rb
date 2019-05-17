@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+
   def create
     User.from_omniauth(auth)
     redirect_to root_path

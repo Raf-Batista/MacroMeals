@@ -5,5 +5,6 @@ Rails.application.routes.draw do
   end
   resources :recipes, :only => [:index, :show]
   get '/auth/:provider/callback', to: 'sessions#create'
+  resources :sessions, :only => [:new, :create]
   root :to => 'static_pages#home'
 end
