@@ -1,12 +1,12 @@
 class RecipesController < ApplicationController
 
   def new
-    @user = User.find(params[:user_id])
+    @user = current_user
     @recipe = @user.recipes.build
   end
 
   def create
-    @user = User.find(params[:user_id])
+    @user = current_user
     if @user.recipes.find_or_create_by(recipe_params)#.build(recipe_params).save
       Ingredient.create_ingredients(@user.recipes.last.id, params[:ingredient])
     end
@@ -14,7 +14,7 @@ class RecipesController < ApplicationController
   end
 
   def show
-    if @user = User.find_by(:id => params[:user_id])
+    if @user = current_user
       @recipe = @user.recipes.find_by(:id => params[:id])
     else
       @recipe = Recipe.find_by(:id => params[:id])

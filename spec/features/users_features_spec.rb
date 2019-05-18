@@ -96,6 +96,7 @@ RSpec.describe 'Users features', :type => :feature do
   context 'Creating recipes' do
     it 'Successfully creates a recipe' do
       user = User.create(:username => 'test', :password => 'test123')
+      page.set_rack_session(:user_id => user.id)
       visit new_user_recipe_path(user)
       fill_in 'recipe[name]', :with => 'Test Recipe'
       fill_in 'recipe[directions]', :with => 'Test Directions'
@@ -109,6 +110,7 @@ RSpec.describe 'Users features', :type => :feature do
 
     it 'Successfully creates a recipe with ingredients' do
       user = User.create(:username => 'test', :password => 'test123')
+      page.set_rack_session(:user_id => user.id)
       visit new_user_recipe_path(user)
       fill_in 'recipe[name]', :with => 'Test Recipe'
       fill_in 'recipe[directions]', :with => 'Test Directions'
@@ -125,6 +127,7 @@ RSpec.describe 'Users features', :type => :feature do
     it 'can view a recipe' do
         user = User.create(:username => 'test', :password => 'test123')
         user.recipes.build(:name => 'test', :directions => 'directions').save
+        page.set_rack_session(:user_id => user.id)
         visit recipe_path(user.recipes.last)
         expect(page).to have_content('test')
         expect(page).to have_content('directions')
@@ -133,11 +136,13 @@ RSpec.describe 'Users features', :type => :feature do
 
   context 'Viewing All Recipes' do
     it 'Shows all Recipes' do
-      3.times do
-        Recipe.create(:name => "Recipe #{i}", :description => 'Test')
+      3.times do |i|
+        Recipe.create(:name => "Recipe #{i}", :directions => 'Test')
       end
       visit recipes_path
-      expect(page).to have_content(/Recipe 1 Recipe 2 Recipe 3/)
+      expect(page).to have_content('Recipe 1')
+      expect(page).to have_content('Recipe 2')
+      expect(page).to have_content('Recipe 3')
     end
   end
 
