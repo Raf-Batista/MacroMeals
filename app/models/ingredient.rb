@@ -5,7 +5,7 @@ class Ingredient < ApplicationRecord
 
   def self.create_ingredients(recipe_id, ingredients_array)
     ingredients_array.each do |ingredient_hash|
-      item = Item.find_or_create_by(:name => ingredient_hash[:name])
+      item = Item.where('lower(name) = ?', name.downcase).first_or_create(:name => ingredient_hash[:name])
       Ingredient.create(:recipe_id => recipe_id, :item_id => item.id, :quantity => ingredient_hash[:quantity])
     end
   end

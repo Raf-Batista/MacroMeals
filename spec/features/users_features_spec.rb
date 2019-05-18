@@ -143,7 +143,7 @@ RSpec.describe 'Users features', :type => :feature do
       expect(page).to have_content('Recipe 2')
     end
 
-    it "shows all of a logged in user's recipes" do
+    it "shows all of a user's recipes" do
       user = User.create(:username => 'test', :password => 'test123')
       3.times do |i|
         user.recipes.build(:name => "User Recipe #{i}", :directions => 'directions').save
