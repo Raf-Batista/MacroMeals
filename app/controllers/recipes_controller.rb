@@ -14,11 +14,7 @@ class RecipesController < ApplicationController
   end
 
   def show
-    if @user = current_user
-      @recipe = @user.recipes.find_by(:id => params[:id])
-    else
-      @recipe = Recipe.find_by(:id => params[:id])
-    end
+    @recipe = Recipe.find_by(:id => params[:id])
   end
 
   def index

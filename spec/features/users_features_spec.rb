@@ -127,7 +127,6 @@ RSpec.describe 'Users features', :type => :feature do
     it 'can view a recipe' do
         user = User.create(:username => 'test', :password => 'test123')
         user.recipes.build(:name => 'test', :directions => 'directions').save
-        page.set_rack_session(:user_id => user.id)
         visit recipe_path(user.recipes.last)
         expect(page).to have_content('test')
         expect(page).to have_content('directions')
