@@ -123,17 +123,15 @@ RSpec.describe 'Users features', :type => :feature do
     end
   end
 
-  context 'Viewing a single Recipe' do
-    it 'can view a recipe' do
+  context 'Viewing recipes' do
+    it 'shows a single recipe' do
         user = User.create(:username => 'test', :password => 'test123')
         user.recipes.build(:name => 'test', :directions => 'directions').save
         visit recipe_path(user.recipes.last)
         expect(page).to have_content('test')
         expect(page).to have_content('directions')
     end
-  end
 
-  context 'Viewing All Recipes' do
     it 'Shows all Recipes' do
       user = User.create(:username => 'test', :password => 'test123')
       3.times do |i|
@@ -143,6 +141,22 @@ RSpec.describe 'Users features', :type => :feature do
       expect(page).to have_content('Recipe 0')
       expect(page).to have_content('Recipe 1')
       expect(page).to have_content('Recipe 2')
+    end
+
+    it "shows all of a logged in user's recipes" do
+      user = User.create(:username => 'test', :password => 'test123')
+      3.times do |i|
+        user.recipes.build(:name => "User Recipe #{i}", :directions => 'directions').save
+      end
+      a_different_user = User.create(:username => 'a different user', :password => 'test123')
+      3.times do |i|
+        a_different_user.recipes.build(:name => "Another User #{i}", :directions => 'directions').save
+      end
+      page.set_rack_session(:user_id => user.id)
+      visit user_recipes_path(user)
+      expect(page).to have_no_content('Another User 0')
+      expect(page).to have_no_content('Another User 1')
+      expect(page).to have_no_content('Another User 2')
     end
   end
 

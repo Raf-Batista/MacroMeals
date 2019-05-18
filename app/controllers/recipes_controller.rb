@@ -18,7 +18,11 @@ class RecipesController < ApplicationController
   end
 
   def index
-    @recipes = Recipe.all
+    if @user = User.find_by(:id => params[:user_id])
+      @recipes = @user.recipes
+    else
+      @recipes = Recipe.all
+    end
   end
 
   private
