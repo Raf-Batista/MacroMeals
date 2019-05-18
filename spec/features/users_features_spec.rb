@@ -121,6 +121,16 @@ RSpec.describe 'Users features', :type => :feature do
     end
   end
 
+  context 'Viewing a single Recipe' do
+    it 'can view a recipe' do
+        user = User.create(:username => 'test', :password => 'test123')
+        user.recipes.build(:name => 'test', :directions => 'directions').save
+        visit recipe_path(user.recipes.last)
+        expect(page).to have_content('test')
+        expect(page).to have_content('directions')
+    end
+  end
+
   context 'Viewing All Recipes' do
     it 'Shows all Recipes' do
       3.times do
