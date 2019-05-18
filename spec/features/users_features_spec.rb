@@ -136,13 +136,14 @@ RSpec.describe 'Users features', :type => :feature do
 
   context 'Viewing All Recipes' do
     it 'Shows all Recipes' do
+      user = User.create(:username => 'test', :password => 'test123')
       3.times do |i|
-        Recipe.create(:name => "Recipe #{i}", :directions => 'Test')
+        user.recipes.build(:name => "Recipe #{i}", :directions => 'directions').save
       end
       visit recipes_path
+      expect(page).to have_content('Recipe 0')
       expect(page).to have_content('Recipe 1')
       expect(page).to have_content('Recipe 2')
-      expect(page).to have_content('Recipe 3')
     end
   end
 
