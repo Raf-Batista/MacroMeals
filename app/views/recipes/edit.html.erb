@@ -20,15 +20,13 @@
   <%= f.label :fat, "Fat:" %>
   <%= f.text_field :fat, :value => @recipe.fat %>
 
-  <label>Ingredient 1</label>
-  <input name="ingredient[][name]" id="ingredient1" />
-  <label>Quantity</label>
-  <input name="ingredient[][quantity]" id="quantity1" />
-  <label>Ingredient 2</label>
-  <input name="ingredient[][name]" id="ingredient2" />
-  <label>Quantity</label>
-  <input name="ingredient[][quantity]" id="quantity2" />
+  <% @recipe.ingredients.count.times do |i| %>
+  <label>Ingredient <%= i += 1 %></label>
+  <input name="ingredient[][name]" id="ingredient<%= i += 1 %>" />
+  <label>Quantity <%= i += 1 %></label>
+  <input name="ingredient[][quantity]" id="quantity<%= i += 1 %>" />
+  <% end %>
 
 
-  <%= f.submit "Create Recipe" %>
+  <%= f.submit "Update Recipe" %>
 <% end %>

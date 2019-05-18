@@ -164,6 +164,7 @@ RSpec.describe 'Users features', :type => :feature do
     it 'can edit a recipe owned by a user' do
       user = User.create(:username => 'test', :password => 'test123')
       user.recipes.build(:name => "Recipe 1", :directions => 'directions').save
+      page.set_rack_session(:user_id => user.id)
       visit edit_user_recipe_path(user, user.recipes.last)
       fill_in 'recipe[name]', :with => 'Updated Recipe'
       fill_in 'recipe[directions]', :with => 'Updated Directions'

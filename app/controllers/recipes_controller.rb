@@ -25,10 +25,26 @@ class RecipesController < ApplicationController
     end
   end
 
+  def edit
+    @user = current_user
+    @recipe = @user.recipes.find_by(:id => params[:id])
+  end
+
+  def update
+    @user = current_user
+    @recipe = @user.recipes.find_by(:id => params[:id])
+    @recipe.update(recipe_params)
+    redirect_to user_recipe_path(@user, @recipe)
+  end
+
   private
 
   def recipe_params
     params.require(:recipe).permit(:name, :directions, :prep_time, :cook_time, :protien, :carbs, :fat)
+  end
+
+  def ingredient_params
+    params.require(:ingredient).permit(:name, :quantity)
   end
 
 end
