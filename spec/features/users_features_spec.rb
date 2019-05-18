@@ -161,7 +161,16 @@ RSpec.describe 'Users features', :type => :feature do
   end
 
   context 'Edit Recipes' do
-
+    it 'can edit a recipe owned by a user' do
+      user = User.create(:username => 'test', :password => 'test123')
+      user.recipes.build(:name => "Recipe 1", :directions => 'directions').save
+      visit edit_user_recipe_path(user, user.recipes.last)
+      fill_in 'recipe[name]', :with => 'Updated Recipe'
+      fill_in 'recipe[directions]', :with => 'Updated Directions'
+      click_button 'Update Recipe'
+      expect(user.recipes.last.name).to eq('Updated Recipe')
+      expect(user.recipes.last.directions).to eq('Updated Directions')
+    end
   end
 
 end
