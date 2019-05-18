@@ -10,7 +10,7 @@ RSpec.describe 'Users features', :type => :feature do
       click_button 'Sign Up'
       expect(User.last.username).to eq('test')
       expect(page).to have_content('Signed Up Successfully')
-      expect(page.current_path).to eq('/users/1')
+      expect(page.current_path).to eq("/users/#{User.last.id}")
     end
 
     it 'adds a session hash on Sign Up' do
@@ -117,6 +117,16 @@ RSpec.describe 'Users features', :type => :feature do
       fill_in 'quantity2', :with => 2
       click_button 'Create Recipe'
       expect(Ingredient.count).to eq(2)
+    end
+
+    it 'does not create an Recipe without ingredients' do
+      user = User.create(:username => 'test', :password => 'test123')
+      visit new_user_recipe_path(user)
+      fill_in 'recipe[name]', :with => 'Test Recipe'
+      fill_in 'recipe[directions]', :with => 'Test Directions'
+      click_button 'Create Recipe'
+      expect(Ingredient.count).to eq(0)
+      expect(Recipe.count).to eq(0)
     end
   end
 end
