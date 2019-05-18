@@ -21,10 +21,10 @@
   <%= f.text_field :fat, :value => @recipe.fat %>
 
   <% @recipe.ingredients.count.times do |i| %>
-  <label>Ingredient <%= i += 1 %></label>
-  <input name="ingredient[][name]" id="ingredient<%= i += 1 %>" />
-  <label>Quantity <%= i += 1 %></label>
-  <input name="ingredient[][quantity]" id="quantity<%= i += 1 %>" />
+    <label>Ingredient <%= i + 1 %></label>
+    <input name="ingredient[][name]" id="ingredient<%= i + 1 %>" value="<%= @recipe.ingredients[i].item.name %>"/>
+    <label>Quantity <%= i + 1 %></label>
+    <input name="ingredient[][quantity]" id="quantity<%= i + 1 %>" value="<%= @recipe.ingredients[i].quantity %>"/>
   <% end %>
 
 
