@@ -7,9 +7,7 @@ class RecipesController < ApplicationController
 
   def create
     @user = current_user
-    if @user.recipes.find_or_create_by(recipe_params)
-      Ingredient.create_ingredients(@user.recipes.last.id, params[:ingredient])
-    end
+    @user.recipes.find_or_create_by(recipe_params)
     redirect_to user_recipe_path(@user, @user.recipes.last)
   end
 
@@ -41,10 +39,6 @@ class RecipesController < ApplicationController
 
   def recipe_params
     params.require(:recipe).permit(:name, :directions, :prep_time, :cook_time, :protien, :carbs, :fat)
-  end
-
-  def ingredient_params
-    params.require(:ingredient).permit(:name, :quantity)
   end
 
 end

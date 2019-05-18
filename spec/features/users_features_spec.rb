@@ -108,19 +108,6 @@ RSpec.describe 'Users features', :type => :feature do
       expect(Recipe.count).to eq(1)
     end
 
-    it 'Successfully creates a recipe with ingredients' do
-      user = User.create(:username => 'test', :password => 'test123')
-      page.set_rack_session(:user_id => user.id)
-      visit new_user_recipe_path(user)
-      fill_in 'recipe[name]', :with => 'Test Recipe'
-      fill_in 'recipe[directions]', :with => 'Test Directions'
-      fill_in 'ingredient1', :with => 'Ingredient 1'
-      fill_in 'quantity1', :with => 1
-      fill_in 'ingredient2', :with => 'Ingredient 2'
-      fill_in 'quantity2', :with => 2
-      click_button 'Create Recipe'
-      expect(Ingredient.count).to eq(2)
-    end
   end
 
   context 'Viewing recipes' do
@@ -173,23 +160,6 @@ RSpec.describe 'Users features', :type => :feature do
       expect(user.recipes.last.directions).to eq('Updated Directions')
     end
 
-    it "can edit a recipe's ingredients owned by a user" do
-      user = User.create(:username => 'test', :password => 'test123')
-      user.recipes.build(:name => "Recipe 1", :directions => 'directions').save
-      item1 = Item.create(:name => 'item 1')
-      item2 = Item.create(:name => 'item 2')
-      user.recipes.last.ingredients.build(:item_id => item1.id, :quantity => 1).save
-      user.recipes.last.ingredients.build(:item_id => item2.id, :quantity => 2).save
-      page.set_rack_session(:user_id => user.id)
-      visit edit_user_recipe_path(user, user.recipes.last)
-      fill_in 'ingredient1', :with => 'Updated Ingredient 1'
-      fill_in 'quantity1', :with => 1
-      fill_in 'ingredient2', :with => 'Updated Ingredient 2'
-      fill_in 'quantity2', :with => 2
-      click_button 'Update Recipe'
-      expect(user.recipes.last.ingredients.first.item.name).to eq('Updated Ingredient 1')
-      expect(user.recipes.last.ingredients.last.item.name).to eq('Updated Ingredient 2')
-    end
   end
 
 end
