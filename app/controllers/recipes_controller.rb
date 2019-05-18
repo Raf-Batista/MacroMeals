@@ -6,7 +6,15 @@ class RecipesController < ApplicationController
   end
 
   def create
+    user = User.find(params[:user_id])
+    if user.recipes.build(recipe_params).save
+      Ingredient.create_ingredients(user.recipes.last.id, params[:ingredient])
+    end
+  end
 
-    binding.pry
+  private
+
+  def recipe_params
+    params.require(:recipe).permit(:name, :directions, :prep_time, :cook_time, :protien, :carbs, :fat)
   end
 end

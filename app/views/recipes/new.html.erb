@@ -20,16 +20,14 @@
   <%= f.label :fat, "Fat:" %>
   <%= f.text_field :fat %>
 
-
-    <label>Ingredient 1</label>
-    <input name="ingredient[name][]" id="ingredient1"></input>
-    <label>Quantity</label>
-    <input name="ingredient[quantity][]" id="quantity1"></input>
-    <label>Ingredient 1</label>
-    <input name="ingredient[name][]" id="ingredient2"></input>
-    <label>Quantity</label>
-    <input name="ingredient[quantity][]" id="quantity2"></input>
-
+  <label>Ingredient 1</label>
+  <input name="ingredient[][name]" id="ingredient1"></input>
+  <label>Quantity</label>
+  <input name="ingredient[][quantity]" id="quantity1"></input>
+  <label>Ingredient 1</label>
+  <input name="ingredient[][name]" id="ingredient2"></input>
+  <label>Quantity</label>
+  <input name="ingredient[][quantity]" id="quantity2"></input>
 
   <%= f.submit "Create Recipe" %>
 <% end %>
