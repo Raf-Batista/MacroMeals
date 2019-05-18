@@ -106,6 +106,7 @@ RSpec.describe 'Users features', :type => :feature do
       click_button 'Create Recipe'
       expect(Recipe.count).to eq(1)
     end
+
     it 'Successfully creates a recipe with ingredients' do
       user = User.create(:username => 'test', :password => 'test123')
       visit new_user_recipe_path(user)
@@ -118,15 +119,20 @@ RSpec.describe 'Users features', :type => :feature do
       click_button 'Create Recipe'
       expect(Ingredient.count).to eq(2)
     end
+  end
 
-    it 'does not create an Recipe without ingredients' do
-      user = User.create(:username => 'test', :password => 'test123')
-      visit new_user_recipe_path(user)
-      fill_in 'recipe[name]', :with => 'Test Recipe'
-      fill_in 'recipe[directions]', :with => 'Test Directions'
-      click_button 'Create Recipe'
-      expect(Ingredient.count).to eq(0)
-      expect(Recipe.count).to eq(0)
+  context 'Viewing All Recipes' do
+    it 'Shows all Recipes' do
+      3.times do
+        Recipe.create(:name => "Recipe #{i}", :description => 'Test')
+      end
+      visit recipes_path
+      expect(page).to have_content(/Recipe 1 Recipe 2 Recipe 3/)
     end
   end
+
+  context 'Edit Recipes' do
+
+  end
+
 end

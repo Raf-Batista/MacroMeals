@@ -1,33 +1,33 @@
 <%= form_for [@user, @recipe] do |f|%>
   <%= f.label :name, "Name:" %>
-  <%= f.text_field :name%>
+  <%= f.text_field :name, :value => @recipe.name %>
 
   <%= f.label :directions, "Directions:" %>
-  <%= f.text_area :directions%>
+  <%= f.text_area :directions, :value => @recipe.directions %>
 
   <%= f.label :prep_time, "Prep Time:" %>
-  <%= f.text_field :prep_time %>
+  <%= f.text_field :prep_time, :value => @recipe.prep_time %>
 
   <%= f.label :cook_time, "Cook Time:" %>
-  <%= f.text_field :cook_time %>
+  <%= f.text_field :cook_time, :value => @recipe.cook_time %>
 
   <%= f.label :protien, "Protien:" %>
-  <%= f.text_field :protien %>
+  <%= f.text_field :protien, :value => @recipe.protien %>
 
   <%= f.label :carbs, "Carbs:" %>
-  <%= f.text_field :carbs %>
+  <%= f.text_field :carbs, :value => @recipe.carbs %>
 
   <%= f.label :fat, "Fat:" %>
-  <%= f.text_field :fat %>
+  <%= f.text_field :fat, :value => @recipe.fat %>
 
   <label>Ingredient 1</label>
-  <input name="ingredient[][name]" id="ingredient1"></input>
+  <input name="ingredient[][name]" id="ingredient1" />
   <label>Quantity</label>
-  <input name="ingredient[][quantity]" id="quantity1"></input>
-  <label>Ingredient 1</label>
-  <input name="ingredient[][name]" id="ingredient2"></input>
+  <input name="ingredient[][quantity]" id="quantity1" />
+  <label>Ingredient 2</label>
+  <input name="ingredient[][name]" id="ingredient2" />
   <label>Quantity</label>
-  <input name="ingredient[][quantity]" id="quantity2"></input>
+  <input name="ingredient[][quantity]" id="quantity2" />
 
   <%= f.submit "Create Recipe" %>
 <% end %>
