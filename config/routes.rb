@@ -3,6 +3,11 @@ Rails.application.routes.draw do
   resources :users do
     resources :recipes
   end
+
+  resources :recipes do
+    resources :ingredients
+  end
+
   resources :recipes, :only => [:index, :show]
   get '/auth/:provider/callback', :to => 'sessions#create'
   get '/login', :to => 'sessions#new'

@@ -8,7 +8,7 @@ class RecipesController < ApplicationController
   def create
     @user = current_user
     @user.recipes.find_or_create_by(recipe_params)
-    redirect_to user_recipe_path(@user, @user.recipes.last)
+    redirect_to new_recipe_ingredient_path(@user.recipes.last)
   end
 
   def show

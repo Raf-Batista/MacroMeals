@@ -3,4 +3,5 @@ class Item < ApplicationRecord
   has_many :recipes, :through => :ingredients
 
   validates :name, :presence => true, :uniqueness => {case_sensitive: false}
+
 end

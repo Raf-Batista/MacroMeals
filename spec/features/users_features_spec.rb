@@ -100,12 +100,28 @@ RSpec.describe 'Users features', :type => :feature do
       visit new_user_recipe_path(user)
       fill_in 'recipe[name]', :with => 'Test Recipe'
       fill_in 'recipe[directions]', :with => 'Test Directions'
-      fill_in 'ingredient1', :with => 'Ingredient 1'
-      fill_in 'quantity1', :with => '1'
-      fill_in 'ingredient2', :with => 'Ingredient 2'
-      fill_in 'quantity2', :with => '2'
       click_button 'Create Recipe'
       expect(Recipe.count).to eq(1)
+    end
+
+    it 'redirects to ingredients new after creating a recipe' do
+      user = User.create(:username => 'test', :password => 'test123')
+      page.set_rack_session(:user_id => user.id)
+      visit new_user_recipe_path(user)
+      fill_in 'recipe[name]', :with => 'Test Recipe'
+      fill_in 'recipe[directions]', :with => 'Test Directions'
+      click_button 'Create Recipe'
+      expect(page.current_path).to eq(new_recipe_ingredient_path(user.recipes.last))
+    end
+
+    it 'can create ingredients' do
+      user = User.create(:username => 'test', :password => 'test123')
+      user.recipes.build(:name => 'test', :directions => 'directions').save
+      visit new_recipe_ingredient_path(user.recipes.last)
+      fill_in 'ingredient[item]', :with => 'item 1'
+      fill_in 'ingredient[quantity]', :with => '2'
+      click_button 'Create Ingredients'
+      expect(Ingredient.count).to eq(1)
     end
 
   end
