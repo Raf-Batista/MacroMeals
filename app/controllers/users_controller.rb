@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = current_user 
+    logged_in? ? @user=(current_user) : redirect_to(login_path, :flash => {:message => 'You are not logged in'})
   end
 
   def edit
