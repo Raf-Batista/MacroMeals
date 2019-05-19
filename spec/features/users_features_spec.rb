@@ -104,6 +104,16 @@ RSpec.describe 'Users features', :type => :feature do
       expect(Recipe.count).to eq(1)
     end
 
+    it 'redirects to new with error messages' do
+      user = User.create(:username => 'test', :password => 'test123')
+      page.set_rack_session(:user_id => user.id)
+      visit new_user_recipe_path(user)
+      fill_in 'recipe[name]', :with => ''
+      fill_in 'recipe[directions]', :with => ''
+      click_button 'Create Recipe'
+      expect(page).to have_content("Name can't be blank, Directions can't be blank")
+    end
+
     it 'Redirects to login if not logged in' do
       User.create(:username => 'test', :password => 'test123')
       page.set_rack_session(:user_id => nil)

@@ -1,21 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Recipe, type: :model do
-  it do
-    should validate_presence_of(:name).
-      with_message('Your Recipe needs to have a name')
-  end
+  it {should validate_presence_of(:name)}
 
   it 'should have a unique name' do
     user = User.create(:username => 'test', :password => 'test123')
     user.recipes.build(:name => 'Recipe', :directions => 'Directions').save
     expect(Recipe.create(:user_id => user.id, :name => 'Recipe', :directions => 'Directions').valid?).to eq(false)
   end
-  it do
-    should validate_presence_of(:directions).
-      with_message('Your Recipe needs to have directions')
-  end
-
+  it {should validate_presence_of(:directions)}
 
   it 'should display the macros for a recipe' do
     recipe = Recipe.new(:name => 'Protien Shake', :protien => 25, :carbs => '2', :fat => 0)

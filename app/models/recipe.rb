@@ -1,6 +1,6 @@
 class Recipe < ApplicationRecord
-  validates :name, :presence => {:message => 'Your Recipe needs to have a name'}, :uniqueness => {case_sensitive: false}
-  validates :directions, :presence => {:message => 'Your Recipe needs to have directions'}
+  validates :name, :presence => true, :uniqueness => {case_sensitive: false}
+  validates :directions, :presence => true
   belongs_to :user
   has_many :ingredients
   has_many :items, :through => :ingredients

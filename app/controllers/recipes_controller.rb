@@ -10,9 +10,15 @@ class RecipesController < ApplicationController
   end
 
   def create
-    @user = current_user
-    @user.recipes.find_or_create_by(recipe_params)
-    redirect_to new_recipe_ingredient_path(@user.recipes.last)
+    @recipe = Recipe.new(recipe_params)
+    @recipe.user = current_user
+    if @recipe.save
+      redirect_to new_recipe_ingredient_path(@recipe)
+    else
+      #binding.pry
+      flash[:warning] = @recipe.errors.full_messages.join(', ')
+      render :new
+    end
   end
 
   def show
