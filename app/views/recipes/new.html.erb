@@ -1,4 +1,5 @@
 <%= form_for [@user, @recipe] do |f|%>
+
   <%= f.label :name, "Name:" %>
   <%= f.text_field :name, :value => @recipe.name %>
 

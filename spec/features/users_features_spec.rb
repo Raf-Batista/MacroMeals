@@ -104,7 +104,7 @@ RSpec.describe 'Users features', :type => :feature do
       expect(Recipe.count).to eq(1)
     end
 
-    it 'redirects to new with error messages' do
+    it 'renders new with error messages' do
       user = User.create(:username => 'test', :password => 'test123')
       page.set_rack_session(:user_id => user.id)
       visit new_user_recipe_path(user)
@@ -238,6 +238,17 @@ RSpec.describe 'Users features', :type => :feature do
       click_button 'Update Recipe'
       expect(user.recipes.last.name).to eq('Updated Recipe')
       expect(user.recipes.last.directions).to eq('Updated Directions')
+    end
+
+    it 'renders edit with errors' do
+      user = User.create(:username => 'test', :password => 'test123')
+      user.recipes.build(:name => "Recipe 1", :directions => 'directions').save
+      page.set_rack_session(:user_id => user.id)
+      visit edit_user_recipe_path(user, user.recipes.last)
+      fill_in 'recipe[name]', :with => ''
+      fill_in 'recipe[directions]', :with => ''
+      click_button 'Update Recipe'
+      expect(page).to have_content("Name can't be blank, Directions can't be blank")
     end
 
     it 'can not edit a recipe owned by a different user' do

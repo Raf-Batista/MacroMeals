@@ -15,7 +15,6 @@ class RecipesController < ApplicationController
     if @recipe.save
       redirect_to new_recipe_ingredient_path(@recipe)
     else
-      #binding.pry
       flash[:warning] = @recipe.errors.full_messages.join(', ')
       render :new
     end
@@ -43,10 +42,13 @@ class RecipesController < ApplicationController
   end
 
   def update
-    @user = current_user
-    @recipe = @user.recipes.find_by(:id => params[:id])
-    @recipe.update(recipe_params)
-    redirect_to user_recipe_path(@user, @recipe)
+    @recipe = current_user.recipes.find_by(:id => params[:id])
+    if @recipe.update(recipe_params)
+      redirect_to user_recipe_path(current_user, @recipe)
+    else
+      flash[:warning] = @recipe.errors.full_messages.join(', ')
+      render :edit
+    end
   end
 
   private
