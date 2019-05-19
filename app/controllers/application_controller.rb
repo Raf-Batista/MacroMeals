@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  
+
   def login(user)
     session[:user_id] = user.id
   end
@@ -15,5 +15,9 @@ class ApplicationController < ActionController::Base
 
   def logged_in?
     !!session[:user_id]
+  end
+
+  def auth
+    request.env["omniauth.auth"]
   end
 end

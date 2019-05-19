@@ -52,7 +52,7 @@ RSpec.describe 'Users features', :type => :feature do
       fill_in 'username', :with => 'test'
       fill_in 'password', :with => 'wrong_password'
       click_button 'Log In'
-      expect(page).to have_content('The email or password you entered was incorrect')
+      expect(page).to have_content('The password you entered was incorrect')
       expect(page.current_path).to eq(login_path)
     end
 
@@ -90,6 +90,38 @@ RSpec.describe 'Users features', :type => :feature do
     it 'displays message if logged out' do
       visit logout_path
       expect(page).to have_content('Can not log out, you are not logged in')
+    end
+  end
+
+  context 'Edit a User' do
+    it 'Can edit a User Successfully' do
+      user = User.create(:username => 'test', :password => 'test123')
+      page.set_rack_session(:user_id => user.id)
+      visit edit_user_path(user)
+      fill_in 'username', :with => 'updated username'
+      fill_in 'password_confirmation', :with => 'test123'
+      click_button 'Update User'
+      expect(User.last.username).to eq('updated username')
+    end
+
+    it 'Can not edit a User with blank or incorrect password confirmation' do
+      user = User.create(:username => 'test', :password => 'test123')
+      page.set_rack_session(:user_id => user.id)
+      visit edit_user_path(user)
+      fill_in 'username', :with => 'updated username'
+      fill_in 'password_confirmation', :with => ''
+      click_button 'Update User'
+      expect(page.current_path).to eq(edit_user_path(user))
+      expect(page).to have_content('Enter your password to confirm your changes')
+    end
+
+    it 'Can not edit a different User' do
+      user = User.create(:username => 'test', :password => 'test123')
+      a_different_user = User.create(:username => 'a different user', :password => 'abc123')
+      page.set_rack_session(:user_id => user.id)
+      visit edit_user_path(a_different_user)
+      expect(page.current_path).to eq(login_path)
+      expect(page).to have_content('Please login to edit your account')
     end
   end
 

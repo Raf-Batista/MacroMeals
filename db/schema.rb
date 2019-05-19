@@ -51,6 +51,8 @@ ActiveRecord::Schema.define(version: 2019_05_17_001656) do
     t.string "password_digest"
     t.string "uid"
     t.string "provider"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
