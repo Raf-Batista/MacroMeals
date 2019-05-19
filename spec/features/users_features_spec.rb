@@ -226,6 +226,26 @@ RSpec.describe 'Users features', :type => :feature do
       expect(user.recipes.last.directions).to eq('Updated Directions')
     end
 
+    it 'can not edit a recipe owned by a different user' do
+      user1 = User.create(:username => 'user 1', :password => 'test123')
+      user1.recipes.build(:name => "User Recipe 1", :directions => 'directions').save
+      user2 = User.create(:username => 'user 2', :password => 'test123')
+      user2.recipes.build(:name => "User Recipe 2", :directions => 'directions').save
+      page.set_rack_session(:user_id => user1.id)
+      visit edit_user_recipe_path(user2, user2.recipes.last)
+      expect(page.current_path).to eq(root_path)
+    end
+
+    it 'sets flash message when trying to edit a recipe owned by a different user' do
+      user1 = User.create(:username => 'user 1', :password => 'test123')
+      user1.recipes.build(:name => "User Recipe 1", :directions => 'directions').save
+      user2 = User.create(:username => 'user 2', :password => 'test123')
+      user2.recipes.build(:name => "User Recipe 2", :directions => 'directions').save
+      page.set_rack_session(:user_id => user1.id)
+      visit edit_user_recipe_path(user2, user2.recipes.last)
+      expect(page).to have_content("You can not edit another user's recipe")
+    end
+
   end
 
 end

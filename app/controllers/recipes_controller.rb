@@ -31,6 +31,10 @@ class RecipesController < ApplicationController
   end
 
   def edit
+    if !current_user.recipes.find_by(:id => params[:id])
+      flash[:message] = "You can not edit another user's recipe"
+      redirect_to root_path and return
+    end
     @user = current_user
     @recipe = @user.recipes.find_by(:id => params[:id])
   end
