@@ -131,10 +131,14 @@ RSpec.describe 'Users features', :type => :feature do
       user.recipes.build(:name => 'test', :directions => 'directions').save
       page.set_rack_session(:user_id => user.id)
       visit new_recipe_ingredient_path(user.recipes.last)
-      fill_in 'ingredient[item]', :with => 'item 1'
+      fill_in 'ingredient[item]', :with => 'item'
       fill_in 'ingredient[quantity]', :with => '2'
       click_button 'Create Ingredients'
       expect(Ingredient.count).to eq(1)
+    end
+
+    it 'can not create item with numbers or special characters' do
+      expect(Item.create(:name => 1).valid?).to eq(false)
     end
 
     it 'redirects to new ingredient if user clicks yes' do
@@ -165,13 +169,13 @@ RSpec.describe 'Users features', :type => :feature do
       user = User.create(:username => 'test', :password => 'test123')
       user.recipes.build(:name => 'test', :directions => 'directions').save
       page.set_rack_session(:user_id => user.id)
-      item1 = Item.create(:name => 'item 1')
-      item2 = Item.create(:name => 'item 2')
+      item1 = Item.create(:name => 'one')
+      item2 = Item.create(:name => 'two')
       Ingredient.create(:item_id => item1.id, :recipe_id => user.recipes.last.id, :quantity => 2)
       Ingredient.create(:item_id => item2.id, :recipe_id => user.recipes.last.id, :quantity => 3)
       visit new_recipe_ingredient_path(user.recipes.last)
-      expect(page).to have_content('item 1')
-      expect(page).to have_content('item 2')
+      expect(page).to have_content('one')
+      expect(page).to have_content('two')
     end
 
   end

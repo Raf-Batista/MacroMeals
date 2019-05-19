@@ -7,7 +7,7 @@ class IngredientsController < ApplicationController
   end
 
   def create
-    item = Item.first_or_create(:name=>params[:ingredient][:item])
+    item = Item.first_or_create(:name => params[:ingredient][:item])
     Ingredient.create(:recipe_id => params[:recipe_id], :item_id => item.id, :quantity => params[:ingredient][:quantity])
     if params[:add] == 'true'
       redirect_to new_recipe_ingredient_path(params[:recipe_id]) and return
