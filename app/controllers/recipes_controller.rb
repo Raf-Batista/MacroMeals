@@ -2,6 +2,7 @@ class RecipesController < ApplicationController
 
   def new
     if !logged_in?
+      flash[:message] = 'You can not create a recipe, please sign up or login'
       redirect_to login_path and return
     end
     @user = current_user
