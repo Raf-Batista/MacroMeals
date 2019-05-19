@@ -265,7 +265,7 @@ RSpec.describe 'Users features', :type => :feature do
         expect(page).to have_content('directions')
     end
 
-    it "shows a recipe's ingredients" do
+    it "Shows a recipe's ingredients" do
         user = User.create(:username => 'test', :password => 'test123')
         user.recipes.build(:name => 'test', :directions => 'directions').save
         item1 = Item.create(:name => 'Bacon')
@@ -277,6 +277,18 @@ RSpec.describe 'Users features', :type => :feature do
         expect(page).to have_content('Egg')
         expect(page).to have_content('4')
         expect(page).to have_content('5')
+    end
+
+    it "Display a recipe's owner" do
+        user = User.create(:username => 'username', :password => 'test123')
+        user.recipes.build(:name => 'test', :directions => 'directions').save
+        item1 = Item.create(:name => 'Bacon')
+        item2 = Item.create(:name => 'Egg')
+        Ingredient.create(:recipe_id => user.recipes.last.id, :item_id => item1.id, :quantity => 4)
+        Ingredient.create(:recipe_id => user.recipes.last.id, :item_id => item2.id, :quantity => 5)
+        visit recipe_path(user.recipes.last)
+        expect(page).to have_content(user.username)
+
     end
 
     it 'Shows all Recipes' do
