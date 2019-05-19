@@ -3,6 +3,12 @@
   <%= f.text_field :item %>
   <%= f.label :quantity %>
   <%= f.text_field :quantity %>
+  <%= label_tag 'Add another ingredient?' %>
+  <%= label_tag 'Add another ingredient?', 'Yes' %>
+  <%= radio_button_tag 'Add another ingredient?', :value => true, :checked => true%>
+  <%= label_tag 'Add another ingredient?', 'No' %>
+  <%= radio_button_tag 'Add another ingredient?', :value => false %>
+
   <% hidden_field(:recipe, :id) %>
   <%= f.submit 'Create Ingredients' %>
 <% end %>
