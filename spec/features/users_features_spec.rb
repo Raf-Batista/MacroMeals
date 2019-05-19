@@ -104,6 +104,18 @@ RSpec.describe 'Users features', :type => :feature do
       expect(Recipe.count).to eq(1)
     end
 
+    it 'Redirects to login if not logged in' do
+      User.create(:username => 'test', :password => 'test123')
+      page.set_rack_session(:user_id => nil)
+      visit 'users/1/recipes/new'
+      expect(page.current_path).to eq(login_path)
+    end
+
+    it 'Displays a message when a user tries to create a recipe while not logged in' do
+      visit 'users/1/recipes/new'
+      expect(page).to have_content('You can not create a recipe, please sign up or login')
+    end
+
     it 'redirects to ingredients new after creating a recipe' do
       user = User.create(:username => 'test', :password => 'test123')
       page.set_rack_session(:user_id => user.id)

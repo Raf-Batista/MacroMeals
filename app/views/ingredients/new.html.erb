@@ -13,6 +13,7 @@
   <%= f.submit 'Create Ingredients' %>
 <% end %>
 
+<h2><%= @recipe.name %> :Ingredients List</h2>
 <% @ingredients.each do |ingredient| %>
   <ul>
     <li><%= ingredient.item.name %></li>
