@@ -3,6 +3,6 @@
 <% else %>
 <h2>Hello <%= @user.username %>, here are your current recipes</h2>
   <% @user.recipes.each do |recipe| %>
-    <%= recipe.name %>
+    <%= link_to recipe.name, user_recipe_path(@user, recipe) %>
   <% end %>
 <% end %>

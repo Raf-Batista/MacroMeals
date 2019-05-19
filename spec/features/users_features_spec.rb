@@ -52,6 +52,14 @@ RSpec.describe 'Users features', :type => :feature do
       visit user_path(user)
       expect(page).to have_content('Hello test, here are your current recipes')
     end
+
+    it "Should link to a recipe's show page" do
+      user = User.create(:username => 'test', :password => 'test123')
+      page.set_rack_session(:user_id => user.id)
+      user.recipes.build(:name => 'Recipe 1', :directions => 'directions').save
+      visit user_path(user)
+      click_link('Recipe 1')
+    end
   end
 
   context 'Login' do
