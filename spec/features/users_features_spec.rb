@@ -27,11 +27,30 @@ RSpec.describe 'Users features', :type => :feature do
       visit new_user_path
       expect(page.current_path).to eq(user_path(user))
     end
+
     it 'displays messsage if logged in' do
       user = User.create(:username => 'test', :password => 'test123')
       page.set_rack_session(:user_id => user.id)
       visit new_user_path
       expect(page).to have_content('You are already logged in')
+    end
+  end
+
+  context "User's show page" do
+
+    it "Displays a User's info without recipes" do
+      user = User.create(:username => 'test', :password => 'test123')
+      page.set_rack_session(:user_id => user.id)
+      visit user_path(user)
+      expect(page).to have_content('Hello test, you currently have no recipes. Click Create Recipe to create your macro friendly recipe')
+    end
+
+    it "Displays a User's info with recipes" do
+      user = User.create(:username => 'test', :password => 'test123')
+      page.set_rack_session(:user_id => user.id)
+      user.recipes.build(:name => 'Recipe 1', :directions => 'directions').save
+      visit user_path(user)
+      expect(page).to have_content('Hello test, here are your current recipes')
     end
   end
 

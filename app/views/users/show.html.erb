@@ -1,0 +1,8 @@
+<% if @user.recipes.empty? %>
+    <h2>Hello <%= @user.username %>, you currently have no recipes. Click Create Recipe to create your macro friendly recipe'</h2>
+<% else %>
+<h2>Hello <%= @user.username %>, here are your current recipes</h2>
+  <% @user.recipes.each do |recipe| %>
+    <%= recipe.name %>
+  <% end %>
+<% end %>

@@ -27,6 +27,7 @@ class SessionsController < ApplicationController
 
   def verify(user)
     if user.authenticate(params[:password])
+      login(user)
       redirect_to user_path(user), :flash => {:message => 'Log in Successful'}
     else
       redirect_to login_path, :flash => {:message => 'The password you entered was incorrect'}
