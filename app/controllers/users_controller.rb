@@ -18,7 +18,9 @@ class UsersController < ApplicationController
   end
 
   def edit
-    if current_user == User.find_by(:id => params[:id])
+    if !logged_in?
+      redirect_to login_path, :flash => {:message => 'Please login to edit your account'} and return
+    elsif current_user == User.find_by(:id => params[:id])
       @user = current_user
     else
       redirect_to root_path, :flash => {:message => 'Please login to edit your account'} and return

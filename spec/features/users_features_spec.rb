@@ -123,6 +123,13 @@ RSpec.describe 'Users features', :type => :feature do
       expect(page.current_path).to eq(root_path)
       expect(page).to have_content('Please login to edit your account')
     end
+
+    it 'redirects_to login_path if not logged in' do
+      user = User.create(:username => 'test', :password => 'test123')
+      visit edit_user_path(user)
+      expect(page.current_path).to eq(login_path)
+      expect(page).to have_content('Please login to edit your account')
+    end
   end
 
   context 'Creating recipes' do
