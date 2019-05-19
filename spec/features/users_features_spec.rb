@@ -149,6 +149,19 @@ RSpec.describe 'Users features', :type => :feature do
       expect(page.current_path).to eq(user_recipe_path(user, user.recipes.last))
     end
 
+    it "shows all of a user's ingredients when adding ingredients to a recipe" do
+      user = User.create(:username => 'test', :password => 'test123')
+      user.recipes.build(:name => 'test', :directions => 'directions').save
+      page.set_rack_session(:user_id => user.id)
+      item1 = Item.create(:name => 'item 1')
+      item2 = Item.create(:name => 'item 2')
+      Ingredient.create(:item_id => item1.id, :recipe_id => user.recipes.last.id, :quantity => 2)
+      Ingredient.create(:item_id => item2.id, :recipe_id => user.recipes.last.id, :quantity => 3)
+      visit new_recipe_ingredient_path(user.recipes.last)
+      expect(page).to have_content('item 1')
+      expect(page).to have_content('item 2')
+    end
+
   end
 
   context 'Viewing recipes' do

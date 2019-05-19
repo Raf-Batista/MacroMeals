@@ -12,3 +12,9 @@
   <% hidden_field(:recipe, :id) %>
   <%= f.submit 'Create Ingredients' %>
 <% end %>
+
+<% @ingredients.each do |ingredient| %>
+  <ul>
+    <li><%= ingredient.item.name %></li>
+  </ul>
+<% end %>
