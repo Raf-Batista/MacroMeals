@@ -117,21 +117,36 @@ RSpec.describe 'Users features', :type => :feature do
     it 'can create ingredients' do
       user = User.create(:username => 'test', :password => 'test123')
       user.recipes.build(:name => 'test', :directions => 'directions').save
+      page.set_rack_session(:user_id => user.id)
       visit new_recipe_ingredient_path(user.recipes.last)
       fill_in 'ingredient[item]', :with => 'item 1'
       fill_in 'ingredient[quantity]', :with => '2'
       click_button 'Create Ingredients'
       expect(Ingredient.count).to eq(1)
     end
+
     it 'redirects to new ingredient if user clicks yes' do
       user = User.create(:username => 'test', :password => 'test123')
       user.recipes.build(:name => 'test', :directions => 'directions').save
+      page.set_rack_session(:user_id => user.id)
       visit new_recipe_ingredient_path(user.recipes.last)
       fill_in 'ingredient[item]', :with => 'item 1'
       fill_in 'ingredient[quantity]', :with => '2'
-      click_button 'Yes'
+      choose 'add_true'
       click_button 'Create Ingredients'
       expect(page.current_path).to eq(new_recipe_ingredient_path(user.recipes.last))
+    end
+
+    it 'redirects to new user recipe if user clicks no' do
+      user = User.create(:username => 'test', :password => 'test123')
+      user.recipes.build(:name => 'test', :directions => 'directions').save
+      page.set_rack_session(:user_id => user.id)
+      visit new_recipe_ingredient_path(user.recipes.last)
+      fill_in 'ingredient[item]', :with => 'item 1'
+      fill_in 'ingredient[quantity]', :with => '2'
+      choose 'add_false'
+      click_button 'Create Ingredients'
+      expect(page.current_path).to eq(user_recipe_path(user, user.recipes.last))
     end
 
   end
