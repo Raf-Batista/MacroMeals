@@ -56,6 +56,21 @@ class RecipesController < ApplicationController
     render :index
   end
 
+  def max_protien
+    @recipes = Recipe.max_protien
+    render :index
+  end
+
+  def max_carbs
+    @recipes = Recipe.max_carbs
+    render :index
+  end
+
+  def max_fat
+    @recipes = Recipe.max_fat
+    render :index
+  end
+
   private
 
   def recipe_params
