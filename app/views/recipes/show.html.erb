@@ -13,8 +13,12 @@
       <p><%= @recipe.macros %></p>
       <p>Prep time: <%= @recipe.prep_time %></p>
       <p>Cook time: <%= @recipe.cook_time %></p>
-      <h2><%= @recipe.directions %></h2>
+      <h3>Directions</h3>
+      <p><%= @recipe.directions %></p>
       <p>Recipe by <%= @recipe.user.username %></p>
-      <%= link_to "Delete", @recipe, method: :delete, data: { confirm: "Really?" } %>
+      <% if @recipe.user.id == session[:user_id] %>
+        <%= link_to 'Add Ingredients', new_recipe_ingredient_path(@recipe) %>
+        <%= link_to "Delete", @recipe, method: :delete, data: { confirm: "Really?" } %>
+      <% end %>
   </div>
 </div>
