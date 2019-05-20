@@ -51,6 +51,11 @@ class RecipesController < ApplicationController
     end
   end
 
+  def destroy
+    #binding.pry
+    Recipe.find_by(:id => params[:id]).destroy
+  end
+
   def ten_minute_meals
     @recipes = Recipe.ten_minute_meals
     render :index

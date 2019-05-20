@@ -12,3 +12,5 @@
 <p>Cook time: <%= @recipe.cook_time %></p>
 <h2><%= @recipe.directions %></h2>
 <p>Recipe by <%= @recipe.user.username %></p>
+
+<%= link_to "Delete", @recipe, method: :delete, data: { confirm: "Really?" } %>
