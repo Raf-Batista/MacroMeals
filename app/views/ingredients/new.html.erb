@@ -1,21 +1,26 @@
- <%= form_for [@recipe, @ingredient] do |f|%>
-  <%= f.label :item%>
-  <%= f.text_field :item %>
-  <%= f.label :quantity %>
-  <%= f.text_field :quantity %>
-  <%= label_tag 'Add another ingredient?' %>
-  <%= label_tag 'Add another ingredient?', 'Yes' %>
-  <%= radio_button_tag 'add', true %>
-  <%= label_tag 'add', 'No' %>
-  <%= radio_button_tag 'add', false %>
-
-  <% hidden_field(:recipe, :id) %>
-  <%= f.submit 'Create Ingredients' %>
-<% end %>
-
-<h2><%= @recipe.name %> :Ingredients List</h2>
-<% @ingredients.each do |ingredient| %>
-  <ul>
-    <li><%= ingredient.item.name %></li>
-  </ul>
-<% end %>
+<div class="container">
+  <div class="jumbotron">
+    <h1 class="text-center">Add Ingredients</h1>
+    <div class="form-group">
+       <%= form_for [@recipe, @ingredient] do |f|%>
+        <%= f.label :item%>
+        <%= f.text_field :item , :class => "form-control"%>
+        <%= f.label :quantity %>
+        <%= f.text_field :quantity, :class => "form-control" %>
+        <%= label_tag 'Add another ingredient?' %>
+        <%= label_tag 'Add another ingredient?', 'Yes' %>
+        <%= radio_button_tag 'add', true %>
+        <%= label_tag 'add', 'No' %>
+        <%= radio_button_tag 'add', false %>
+        <% hidden_field(:recipe, :id) %>
+        <%= f.submit 'Create Ingredients', :class => "btn btn-primary mt-2" %>
+      <% end %>
+      <h2><%= @recipe.name %> :Ingredients List</h2>
+      <% @ingredients.each do |ingredient| %>
+        <ul>
+          <li><%= ingredient.item.name %></li>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+</div>
