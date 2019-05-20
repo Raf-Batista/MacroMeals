@@ -7,12 +7,34 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 keto_king = User.create(:username => 'Keto_king', :password => 'keto123')
-keto_king.recipes.build(:name => 'Bacon and Eggs', :directions => 'Cook some bacon and eggs')
+keto_king.recipes.build(:name => 'Bacon and Eggs', :directions => 'Cook some bacon and eggs', :prep_time => 5, :cook_time => 10, :protien => 30, :carbs => 0, :fat => 20)
 bacon = Item.create(:name => 'Bacon')
 egg = Item.create(:name => 'Egg')
 keto_king.recipes.last.ingredients.build(item_id: bacon.id, quantity: 4)
 keto_king.recipes.last.ingredients.build(item_id: egg.id, quantity: 4)
 keto_king.save
+
+carbs4days = User.create(:username => 'carbs4days', :password => 'carbs123')
+carbs4days.recipes.build(:name => 'Granola Bowl', :directions => 'Put the ingredients together, mix, enjoy. Best before a heavy squat or deadlift session', :prep_time => 5, :cook_time => 2, :protien => 15, :carbs => 50, :fat => 15)
+granola = Item.create(:name => 'Granola')
+blueberry = Item.create(:name => 'Blueberry')
+yogurt = Item.create(:name => 'Yogurt')
+blackberry = Item.create(:name => 'Blackberry')
+carbs4days.recipes.last.ingredients.build(item_id: granola.id, quantity: 4)
+carbs4days.recipes.last.ingredients.build(item_id: blueberry.id, quantity: 4)
+carbs4days.recipes.last.ingredients.build(item_id: blackberry.id, quantity: 4)
+carbs4days.recipes.last.ingredients.build(item_id: yogurt.id, quantity: 4)
+carbs4days.save
+
+gains_bro = User.create(:username => 'gains_bro', :password => 'gains123')
+gains_bro.recipes.build(:name => 'Granola Bowl', :directions => 'Put the ingredients together, mix, enjoy. Best before a heavy squat or deadlift session', :prep_time => 5, :cook_time => 2, :protien => 15, :carbs => 50, :fat => 15)
+chicken = Item.create(:name => 'Chicken')
+rice = Item.create(:name => 'Rice')
+brocolli = Item.create(:name => 'Brocolli')
+gains_bro.recipes.last.ingredients.build(item_id: chicken.id, quantity: 4)
+gains_bro.recipes.last.ingredients.build(item_id: rice.id, quantity: 4)
+gains_bro.recipes.last.ingredients.build(item_id: brocolli.id, quantity: 4)
+gains_bro.save
 
 
 

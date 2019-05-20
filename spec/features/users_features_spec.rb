@@ -436,20 +436,4 @@ RSpec.describe 'Users features', :type => :feature do
       expect(page.current_path).to eq(user_path(user))
     end
   end
-
-  context 'Modify recipe ingredients' do
-    it 'Can delete an ingredient' do
-      user = User.create(:username => 'test', :password => 'test123')
-      user.recipes.build(:name => 'test', :directions => 'directions').save
-      bacon = Item.new(:name => 'Bacon')
-      egg = Item.new(:name => 'Egg')
-      Ingredient.create(:recipe_id => user.recipes.last, :item_id => bacon.id, :quantity => 2)
-      Ingredient.create(:recipe_id => user.recipes.last, :item_id => egg.id, :quantity => 2)
-      page.set_rack_session(:user_id => user.id)
-      visit new_recipe_ingredient_path(user.recipes.last)
-      
-
-    end
-  end
-
 end
