@@ -111,9 +111,10 @@ RSpec.describe 'Users features', :type => :feature do
       fill_in 'username', :with => 'test'
       fill_in 'password', :with => 'test123'
       click_button 'Log In'
-      click_on 'Logout'
+      find(:xpath, "/html/body/nav/ul/li[3]/a").click()
       expect(page.get_rack_session['user_id']).to eq(nil)
     end
+
     it 'Displays logout message' do
       user = User.create(:username => 'test', :password => 'test123')
       page.set_rack_session(:user_id => user.id)
@@ -267,14 +268,24 @@ RSpec.describe 'Users features', :type => :feature do
     it 'shows a single recipe' do
       user = User.create(:username => 'test', :password => 'test123')
       user.recipes.build(:name => 'test', :directions => 'directions').save
+      page.set_rack_session(:user_id => user.id)
       visit recipe_path(user.recipes.last)
       expect(page).to have_content('test')
       expect(page).to have_content('directions')
     end
 
+    it 'redirects to login if not logged in' do
+      user = User.create(:username => 'test', :password => 'test123')
+      user.recipes.build(:name => 'test', :directions => 'directions').save
+      visit recipe_path(user.recipes.last)
+      expect(page).to have_content('You are not logged in')
+      expect(page.current_path).to eq(login_path)
+    end
+
     it "Shows a recipe's ingredients" do
       user = User.create(:username => 'test', :password => 'test123')
       user.recipes.build(:name => 'test', :directions => 'directions').save
+      page.set_rack_session(:user_id => user.id)
       item1 = Item.create(:name => 'Bacon')
       item2 = Item.create(:name => 'Egg')
       Ingredient.create(:recipe_id => user.recipes.last.id, :item_id => item1.id, :quantity => 4)
@@ -289,6 +300,7 @@ RSpec.describe 'Users features', :type => :feature do
     it "Shows a recipe's macros" do
       user = User.create(:username => 'test', :password => 'test123')
       user.recipes.build(:name => 'test', :directions => 'directions', :protien => 35, :carbs => 0, :fat => 20).save
+      page.set_rack_session(:user_id => user.id)
       item1 = Item.create(:name => 'Bacon')
       item2 = Item.create(:name => 'Egg')
       Ingredient.create(:recipe_id => user.recipes.last.id, :item_id => item1.id, :quantity => 4)
@@ -300,6 +312,7 @@ RSpec.describe 'Users features', :type => :feature do
     it "Shows a recipe's prep and cook time" do
       user = User.create(:username => 'test', :password => 'test123')
       user.recipes.build(:name => 'test', :directions => 'directions', :cook_time => 25, :prep_time => 15).save
+      page.set_rack_session(:user_id => user.id)
       visit recipe_path(user.recipes.last)
       expect(page).to have_content('Prep time: 15')
       expect(page).to have_content('Cook time: 25')
@@ -308,6 +321,7 @@ RSpec.describe 'Users features', :type => :feature do
     it "Display a recipe's owner" do
       user = User.create(:username => 'username', :password => 'test123')
       user.recipes.build(:name => 'test', :directions => 'directions').save
+      page.set_rack_session(:user_id => user.id)
       item1 = Item.create(:name => 'Bacon')
       item2 = Item.create(:name => 'Egg')
       Ingredient.create(:recipe_id => user.recipes.last.id, :item_id => item1.id, :quantity => 4)
@@ -422,20 +436,12 @@ RSpec.describe 'Users features', :type => :feature do
       user.recipes.build(:name => "User Recipe 1", :directions => 'directions').save
       page.set_rack_session(:user_id => user.id)
       visit user_recipe_path(user, user.recipes.last)
-      click_link("Delete")
+      find(:xpath, "/html/body/a").click()
       expect(Recipe.count).to eq(0)
     end
 
-    it 'can not delete a recipe if not logged in' do
-      user = User.create(:username => 'user 1', :password => 'test123')
-      user.recipes.build(:name => "User Recipe 1", :directions => 'directions').save
-      visit user_recipe_path(user, user.recipes.last)
-      click_link("Delete")
-      expect(page.current_path).to eq(login_path)
-    end
-
     it 'can not delete a recipe owned by another user' do
-        user = User.create(:username => 'user 1', :password => 'test123')
+      user = User.create(:username => 'user 1', :password => 'test123')
       page.set_rack_session(:user_id => user.id)
       another_user = User.create(:username => 'another recipe', :password => 'test123')
       another_user.recipes.build(:name => "Recipe 1", :directions => 'directions').save

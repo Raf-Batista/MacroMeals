@@ -21,7 +21,11 @@ class RecipesController < ApplicationController
   end
 
   def show
-    @recipe = Recipe.find_by(:id => params[:id])
+    if !logged_in?
+      redirect_to login_path, :flash => {:message => 'You are not logged in'} and return
+    else
+      @recipe = Recipe.find_by(:id => params[:id])
+    end
   end
 
   def index
