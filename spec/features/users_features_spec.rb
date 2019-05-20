@@ -420,9 +420,18 @@ RSpec.describe 'Users features', :type => :feature do
     it 'can delete a recipe' do
       user = User.create(:username => 'user 1', :password => 'test123')
       user.recipes.build(:name => "User Recipe 1", :directions => 'directions').save
+      page.set_rack_session(:user_id => user.id)
       visit user_recipe_path(user, user.recipes.last)
       click_link("Delete")
       expect(Recipe.count).to eq(0)
+    end
+
+    it 'can not delete a recipe if not logged in' do
+      user = User.create(:username => 'user 1', :password => 'test123')
+      user.recipes.build(:name => "User Recipe 1", :directions => 'directions').save
+      visit user_recipe_path(user, user.recipes.last)
+      click_link("Delete")
+      expect(page.current_path).to eq(login_path)
     end
   end
 

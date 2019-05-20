@@ -52,7 +52,9 @@ class RecipesController < ApplicationController
   end
 
   def destroy
-    #binding.pry
+    if !logged_in?
+      redirect_to login_path and return
+    end
     Recipe.find_by(:id => params[:id]).destroy
   end
 
