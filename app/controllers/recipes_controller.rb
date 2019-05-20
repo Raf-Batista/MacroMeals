@@ -55,6 +55,7 @@ class RecipesController < ApplicationController
     if !logged_in?
       redirect_to login_path and return
     elsif recipe = current_user.recipes.find_by(params[:id])
+      recipe.ingredients.destroy_all
       recipe.destroy
       redirect_to root_path, :flash => {:message => 'Recipe deleted'} and return
     else
