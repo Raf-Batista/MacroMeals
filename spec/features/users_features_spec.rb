@@ -286,6 +286,17 @@ RSpec.describe 'Users features', :type => :feature do
       expect(page).to have_content('5')
     end
 
+    it "Shows a recipe's macros" do
+      user = User.create(:username => 'test', :password => 'test123')
+      user.recipes.build(:name => 'test', :directions => 'directions', :protien => 35, :carbs => 0, :fat => 20).save
+      item1 = Item.create(:name => 'Bacon')
+      item2 = Item.create(:name => 'Egg')
+      Ingredient.create(:recipe_id => user.recipes.last.id, :item_id => item1.id, :quantity => 4)
+      Ingredient.create(:recipe_id => user.recipes.last.id, :item_id => item2.id, :quantity => 5)
+      visit recipe_path(user.recipes.last)
+      expect(page).to have_content('protien: 35g carbs: 0g fat: 20g')
+    end
+
     it "Display a recipe's owner" do
       user = User.create(:username => 'username', :password => 'test123')
       user.recipes.build(:name => 'test', :directions => 'directions').save
