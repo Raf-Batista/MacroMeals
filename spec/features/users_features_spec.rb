@@ -297,6 +297,14 @@ RSpec.describe 'Users features', :type => :feature do
       expect(page).to have_content('protien: 35g carbs: 0g fat: 20g')
     end
 
+    it "Shows a recipe's prep and cook time" do
+      user = User.create(:username => 'test', :password => 'test123')
+      user.recipes.build(:name => 'test', :directions => 'directions', :cook_time => 25, :prep_time => 15).save
+      visit recipe_path(user.recipes.last)
+      expect(page).to have_content('Prep time: 15')
+      expect(page).to have_content('Cook time: 25')
+    end
+
     it "Display a recipe's owner" do
       user = User.create(:username => 'username', :password => 'test123')
       user.recipes.build(:name => 'test', :directions => 'directions').save
@@ -345,6 +353,8 @@ RSpec.describe 'Users features', :type => :feature do
       expect(page).to have_no_content('Another User 1')
       expect(page).to have_no_content('Another User 2')
     end
+
+    it 'Has a route to meals with 10 minutes or less cook time'
   end
 
   context 'Edit Recipes' do
