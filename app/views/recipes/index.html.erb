@@ -1,5 +1,10 @@
-<% @recipes.each do |recipe| %>
-  <ul>
-    <li><%= link_to recipe.name, user_recipe_path(recipe.user, recipe) %> <%= recipe.macros %> Cook time: <%= recipe.cook_time %></li>
-  </ul>
-<% end %>
+<div class="container">
+  <div class="jumbotron">
+    <h1 class="text-center">Recipes</h1>
+    <% @recipes.each do |recipe| %>
+      <ul>
+        <li><%= link_to recipe.name, user_recipe_path(recipe.user, recipe) %> <%= recipe.macros %> Cook time: <%= recipe.cook_time %></li>
+      </ul>
+    <% end %>
+  </div>
+</div>

@@ -1,16 +1,20 @@
-<h1><%= @recipe.name %></h1>
-<% if @recipe.ingredients %>
-  <h2>Ingredients</h2>
-  <ul>
-    <% @recipe.ingredients.each do |ingredient| %>
-      <li><%= ingredient.quantity %> <%= ingredient.item.name %></li>
-    <% end %>
-  </ul>
-<% end %>
-<p><%= @recipe.macros %></p>
-<p>Prep time: <%= @recipe.prep_time %></p>
-<p>Cook time: <%= @recipe.cook_time %></p>
-<h2><%= @recipe.directions %></h2>
-<p>Recipe by <%= @recipe.user.username %></p>
-
-<%= link_to "Delete", @recipe, method: :delete, data: { confirm: "Really?" } %>
+<div class="container">
+  <div class="jumbotron">
+    <h1 class="text-center">Recipe</h1>
+      <h1><%= @recipe.name %></h1>
+      <% if @recipe.ingredients %>
+        <h2>Ingredients</h2>
+        <ul>
+          <% @recipe.ingredients.each do |ingredient| %>
+            <li><%= ingredient.quantity %> <%= ingredient.item.name %></li>
+          <% end %>
+        </ul>
+      <% end %>
+      <p><%= @recipe.macros %></p>
+      <p>Prep time: <%= @recipe.prep_time %></p>
+      <p>Cook time: <%= @recipe.cook_time %></p>
+      <h2><%= @recipe.directions %></h2>
+      <p>Recipe by <%= @recipe.user.username %></p>
+      <%= link_to "Delete", @recipe, method: :delete, data: { confirm: "Really?" } %>
+  </div>
+</div>

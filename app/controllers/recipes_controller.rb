@@ -29,11 +29,7 @@ class RecipesController < ApplicationController
   end
 
   def index
-    if @user = User.find_by(:id => params[:user_id])
-      @recipes = @user.recipes
-    else
-      @recipes = Recipe.all
-    end
+    @recipes = Recipe.all
   end
 
   def edit
