@@ -354,7 +354,21 @@ RSpec.describe 'Users features', :type => :feature do
       expect(page).to have_no_content('Another User 2')
     end
 
-    it 'Has a route to meals with 10 minutes or less cook time'
+    it 'Shows Recipes with 10 minutes or less cook time' do
+      user = User.create(:username => 'test', :password => 'test123')
+      3.times do |i|
+        user.recipes.build(:name => "User Recipe #{i}", :directions => 'directions', :cook_time => "#{i + 7}").save
+      end
+      a_different_user = User.create(:username => 'a different user', :password => 'test123')
+      3.times do |i|
+        a_different_user.recipes.build(:name => "Another User #{i}", :directions => 'directions', :cook_time => "#{i + 10}").save
+      end
+      visit ten_minute_meals_path
+      expect(page).to have_content('Cook time: 8')
+      expect(page).to have_content('Cook time: 10')
+      expect(page).to have_no_content('Cook time: 11')
+      expect(page).to have_no_content('Cook time: 14')
+    end
   end
 
   context 'Edit Recipes' do

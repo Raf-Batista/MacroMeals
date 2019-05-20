@@ -51,6 +51,11 @@ class RecipesController < ApplicationController
     end
   end
 
+  def ten_minute_meals
+    @recipes = Recipe.ten_minute_meals
+    render :index
+  end
+
   private
 
   def recipe_params
