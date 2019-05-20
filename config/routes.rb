@@ -13,7 +13,6 @@ Rails.application.routes.draw do
   get '/login', :to => 'sessions#new'
   post '/login', :to => 'sessions#create'
   get '/logout', :to => 'sessions#destroy'
-  get '/delete_recipe', :to => 'recipes#destroy'
   get '/ten_minute_meals', :to => 'recipes#ten_minute_meals'
   get '/max_protien', :to => 'recipes#max_protien'
   get '/max_carbs', :to => 'recipes#max_carbs'
