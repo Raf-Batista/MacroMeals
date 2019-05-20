@@ -311,12 +311,13 @@ RSpec.describe 'Users features', :type => :feature do
     it 'Shows all Recipes' do
       user = User.create(:username => 'test', :password => 'test123')
       3.times do |i|
-        user.recipes.build(:name => "Recipe #{i}", :directions => 'directions').save
+        user.recipes.build(:name => "Recipe #{i}", :directions => 'directions', :protien => 25, :carbs => 20, :fat => 5).save
       end
       visit recipes_path
       expect(page).to have_content('Recipe 0')
       expect(page).to have_content('Recipe 1')
       expect(page).to have_content('Recipe 2')
+      expect(page).to have_content('protien: 25g carbs: 20g fat: 5g')
     end
 
     it "shows all of a user's recipes" do
