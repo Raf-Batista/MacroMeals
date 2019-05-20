@@ -154,8 +154,9 @@ RSpec.describe 'Users features', :type => :feature do
       user = User.create(:username => 'test', :password => 'test123')
       a_different_user = User.create(:username => 'a different user', :password => 'abc123')
       page.set_rack_session(:user_id => user.id)
+
       visit edit_user_path(a_different_user)
-      expect(page.current_path).to eq(root_path)
+      expect(page.current_path).to eq(user_path(user))
       expect(page).to have_content('Please login to edit your account')
     end
 
@@ -352,22 +353,6 @@ RSpec.describe 'Users features', :type => :feature do
       click_link 'User Recipe 1'
     end
 
-    it "Has a link to recipe show page" do
-      user = User.create(:username => 'test', :password => 'test123')
-      3.times do |i|
-        user.recipes.build(:name => "User Recipe #{i}", :directions => 'directions').save
-      end
-      a_different_user = User.create(:username => 'a different user', :password => 'test123')
-      3.times do |i|
-        a_different_user.recipes.build(:name => "Another User #{i}", :directions => 'directions').save
-      end
-      page.set_rack_session(:user_id => user.id)
-      visit user_recipes_path(user)
-      expect(page).to have_no_content('Another User 0')
-      expect(page).to have_no_content('Another User 1')
-      expect(page).to have_no_content('Another User 2')
-    end
-
     it 'Shows Recipes with 10 minutes or less cook time' do
       user = User.create(:username => 'test', :password => 'test123')
       3.times do |i|
@@ -416,7 +401,7 @@ RSpec.describe 'Users features', :type => :feature do
       user2.recipes.build(:name => "User Recipe 2", :directions => 'directions').save
       page.set_rack_session(:user_id => user1.id)
       visit edit_user_recipe_path(user2, user2.recipes.last)
-      expect(page.current_path).to eq(root_path)
+      expect(page.current_path).to eq(user_path(user1))
     end
 
     it 'sets flash message when trying to edit a recipe owned by a different user' do
@@ -436,7 +421,7 @@ RSpec.describe 'Users features', :type => :feature do
       user.recipes.build(:name => "User Recipe 1", :directions => 'directions').save
       page.set_rack_session(:user_id => user.id)
       visit user_recipe_path(user, user.recipes.last)
-      find(:xpath, "/html/body/a").click()
+      click_link 'Delete'
       expect(Recipe.count).to eq(0)
     end
 
@@ -448,7 +433,7 @@ RSpec.describe 'Users features', :type => :feature do
       visit user_recipe_path(another_user, another_user.recipes.last)
       click_link("Delete")
       expect(page).to have_content('You are not logged in')
-      expect(page.current_path).to eq(root_path)
+      expect(page.current_path).to eq(user_path(user))
     end
   end
 
