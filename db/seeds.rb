@@ -27,7 +27,7 @@ carbs4days.recipes.last.ingredients.build(item_id: yogurt.id, quantity: '200 gra
 carbs4days.save
 
 gains_bro = User.create(:username => 'gains_bro', :password => 'gains123')
-gains_bro.recipes.build(:name => 'Granola Bowl', :directions => 'Put the ingredients together, mix, enjoy. Best before a heavy squat or deadlift session', :prep_time => 5, :cook_time => 2, :protien => 50, :carbs => 70, :fat => 10)
+gains_bro.recipes.build(:name => 'Bodybuilding Meal', :directions => "Cook the rice chicke and brocolli. No sauces bro, it's not bulking season", :prep_time => 15, :cook_time => 25, :protien => 50, :carbs => 70, :fat => 10)
 chicken = Item.create(:name => 'Chicken')
 rice = Item.create(:name => 'Rice')
 brocolli = Item.create(:name => 'Brocolli')

@@ -44,7 +44,7 @@ class RecipesController < ApplicationController
   def update
     @recipe = current_user.recipes.find_by(:id => params[:id])
     if @recipe.update(recipe_params)
-      redirect_to user_recipe_path(current_user, @recipe)
+      redirect_to user_recipe_path(current_user, @recipe), :flash => {:message => 'Update Successful'}
     else
       flash[:warning] = @recipe.errors.full_messages.join(', ')
       render :edit
