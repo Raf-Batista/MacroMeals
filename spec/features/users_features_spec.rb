@@ -222,10 +222,6 @@ RSpec.describe 'Users features', :type => :feature do
       expect(Ingredient.count).to eq(1)
     end
 
-    it 'can not create item with numbers or special characters' do
-      expect(Item.create(:name => 1).valid?).to eq(false)
-    end
-
     it 'redirects to new ingredient if user clicks yes' do
       user = User.create(:username => 'test', :password => 'test123')
       user.recipes.build(:name => 'test', :directions => 'directions').save
