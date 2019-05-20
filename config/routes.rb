@@ -18,5 +18,6 @@ Rails.application.routes.draw do
   get '/max_protien', :to => 'recipes#max_protien'
   get '/max_carbs', :to => 'recipes#max_carbs'
   get '/max_fat', :to => 'recipes#max_fat'
+  get '/about', :to => 'static_pages#about'
   root :to => 'static_pages#home'
 end
