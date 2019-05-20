@@ -18,6 +18,7 @@
       <p>Recipe by <%= @recipe.user.username %></p>
       <% if @recipe.user.id == session[:user_id] %>
         <%= link_to 'Add Ingredients', new_recipe_ingredient_path(@recipe) %>
+        <%= link_to 'Delete Ingredients', new_recipe_ingredient_path(@recipe) %>
         <%= link_to "Delete", @recipe, method: :delete, data: { confirm: "Really?" } %>
       <% end %>
   </div>

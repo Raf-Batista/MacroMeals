@@ -16,4 +16,10 @@ class IngredientsController < ApplicationController
     redirect_to user_recipe_path(current_user, params[:recipe_id])
   end
 
+  def destroy
+    ingredient =   Ingredient.find_by(:id => params[:id])
+    recipe = ingredient.recipe_id
+    ingredient.destroy
+    redirect_to new_recipe_ingredient_path(recipe)
+  end
 end
