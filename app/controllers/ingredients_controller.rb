@@ -7,10 +7,11 @@ class IngredientsController < ApplicationController
   end
 
   def create
-    item = Item.first_or_create(:name => params[:ingredient][:item])
-    Ingredient.create(:recipe_id => params[:recipe_id], :item_id => item.id, :quantity => params[:ingredient][:quantity])
+    @recipe = Recipe.find_by(:id => params[:recipe_id])
+    item = Item.find_or_create_by(:name => params[:ingredient][:item])
+    Ingredient.find_or_create_by(:recipe_id => params[:recipe_id], :item_id => item.id, :quantity => params[:ingredient][:quantity])
     if params[:add] == 'true'
-      redirect_to new_recipe_ingredient_path(params[:recipe_id]) and return
+      redirect_to new_recipe_ingredient_path(@recipe) and return
     end
     redirect_to user_recipe_path(current_user, params[:recipe_id])
   end

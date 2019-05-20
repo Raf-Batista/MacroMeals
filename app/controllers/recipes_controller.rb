@@ -89,4 +89,8 @@ class RecipesController < ApplicationController
     params.require(:recipe).permit(:name, :directions, :prep_time, :cook_time, :protien, :carbs, :fat)
   end
 
+  def ingredient_params
+    params.require(:ingredient).each {|ingredient| ingredient.permit(:name, :quantity)}
+  end
+
 end
