@@ -433,6 +433,17 @@ RSpec.describe 'Users features', :type => :feature do
       click_link("Delete")
       expect(page.current_path).to eq(login_path)
     end
+
+    it 'can not delete a recipe owned by another user' do
+        user = User.create(:username => 'user 1', :password => 'test123')
+      page.set_rack_session(:user_id => user.id)
+      another_user = User.create(:username => 'another recipe', :password => 'test123')
+      another_user.recipes.build(:name => "Recipe 1", :directions => 'directions').save
+      visit user_recipe_path(another_user, another_user.recipes.last)
+      click_link("Delete")
+      expect(page).to have_content('You are not logged in')
+      expect(page.current_path).to eq(root_path)
+    end
   end
 
 end
