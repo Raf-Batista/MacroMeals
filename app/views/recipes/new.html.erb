@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="jumbotron">
+    <h1 class="text-center">Create a Recipe</h1>
+    <div class="form-group">
+      <%= form_for [@user, @recipe] do |f|%>
+        <%= f.label :name, "Name:" %>
+        <%= f.text_field :name, :value => @recipe.name, :class => "form-control" %>
+        <%= f.label :directions, "Directions:" %>
+        <%= f.text_area :directions, :value => @recipe.directions, :class => "form-control" %>
+        <%= f.label :prep_time, "Prep Time:" %>
+        <%= f.text_field :prep_time, :value => @recipe.prep_time, :class => "form-control" %>
+        <%= f.label :cook_time, "Cook Time:" %>
+        <%= f.text_field :cook_time, :value => @recipe.cook_time, :class => "form-control" %>
+        <%= f.label :protien, "Protien:" %>
+        <%= f.text_field :protien, :value => @recipe.protien, :class => "form-control" %>
+        <%= f.label :carbs, "Carbs:" %>
+        <%= f.text_field :carbs, :value => @recipe.carbs, :class => "form-control" %>
+        <%= f.label :fat, "Fat:" %>
+        <%= f.text_field :fat, :value => @recipe.fat, :class => "form-control" %>
+        <%= f.submit "Create Recipe", :class => "btn btn-primary mt-2" %>
+      <% end %>
+    </div>
+  </div>
+</div>

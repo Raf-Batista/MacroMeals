@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="jumbotron">
+    <% if @user.recipes.empty? %>
+        <h2>Hello <%= @user.username %>, you currently have no recipes. Click Create Recipe to create your macro friendly recipe'</h2>
+    <% else %>
+    <h2>Hello <%= @user.username %>, here are your current recipes</h2>
+      <% @user.recipes.each do |recipe| %>
+        <%= link_to recipe.name, user_recipe_path(@user, recipe) %>
+      <% end %>
+    <% end %>
+    <%= link_to 'Create a Recipe', new_user_recipe_path(@user) %>
+    <%= link_to 'Edit Account', edit_user_path(@user) %>
+    <%= link_to 'Ten Minute Meals', ten_minute_meals_path %>
+    <%= link_to 'Max Protien', max_protien_path %>
+    <%= link_to 'Max Carbs', max_carbs_path %>
+    <%= link_to 'Max Fat', max_fat_path %>
+  </div>
+</div>
