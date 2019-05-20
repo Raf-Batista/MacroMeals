@@ -8,6 +8,8 @@
         <%= link_to recipe.name, user_recipe_path(@user, recipe) %>
       <% end %>
     <% end %>
+    <%= link_to 'Create a Recipe', new_user_recipe_path(@user) %>
+    <%= link_to 'Edit Account', edit_user_path(@user) %>
     <%= link_to 'Ten Minute Meals', ten_minute_meals_path %>
     <%= link_to 'Max Protien', max_protien_path %>
     <%= link_to 'Max Carbs', max_carbs_path %>
