@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_17_001656) do
+ActiveRecord::Schema.define(version: 2019_05_20_183554) do
 
   create_table "ingredients", force: :cascade do |t|
     t.integer "recipe_id"
     t.integer "item_id"
-    t.integer "quantity"
+    t.string "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "metric"
