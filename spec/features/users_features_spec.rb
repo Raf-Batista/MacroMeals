@@ -320,7 +320,17 @@ RSpec.describe 'Users features', :type => :feature do
       expect(page).to have_content('protien: 25g carbs: 20g fat: 5g')
     end
 
-    it "shows all of a user's recipes" do
+    it "Shows all of a user's recipes" do
+      user = User.create(:username => 'test', :password => 'test123')
+      2.times do |i|
+        user.recipes.build(:name => "User Recipe #{i}", :directions => 'directions').save
+      end
+      page.set_rack_session(:user_id => user.id)
+      visit user_recipes_path(user)
+      click_link 'User Recipe 1'
+    end
+
+    it "Has a link to recipe show page" do
       user = User.create(:username => 'test', :password => 'test123')
       3.times do |i|
         user.recipes.build(:name => "User Recipe #{i}", :directions => 'directions').save
