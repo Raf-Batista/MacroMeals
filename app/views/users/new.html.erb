@@ -2,7 +2,7 @@
   <div class="jumbotron">
     <div class="form-group">
       <%= form_for @user do |f| %>
-          <%= render :partial => 'shared/user_form', :locals => {:f => f} %>
+          <%= render :partial => 'form', :locals => {:f => f} %>
         <%= f.submit 'Sign Up', :class => "btn btn-primary mt-2" %>
       <% end %>
     </div>
