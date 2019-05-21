@@ -2,10 +2,7 @@
   <div class="jumbotron">
     <div class="form-group">
       <%= form_for @user do |f| %>
-        <%= f.label 'Username:' %>
-        <%= f.text_field :username, :class => "form-control" %>
-        <%= f.label 'Password:' %>
-        <%= f.password_field :password, :class => "form-control" %>
+        <%= render :partial => 'shared/user_form', :locals => {:f => f} %>
         <%= f.submit 'Update', :class => "btn btn-primary mt-2" %>
       <% end %>
     </div>
