@@ -3,16 +3,7 @@
     <h1 class="text-center">Add Ingredients</h1>
     <div class="form-group">
        <%= form_for [@recipe, @ingredient] do |f|%>
-        <%= f.label :item%>
-        <%= f.text_field :item , :class => "form-control"%>
-        <%= f.label :quantity %>
-        <%= f.text_field :quantity, :class => "form-control" %>
-        <%= label_tag 'Add another ingredient?' %>
-        <%= label_tag 'Add another ingredient?', 'Yes' %>
-        <%= radio_button_tag 'add', true %>
-        <%= label_tag 'add', 'No' %>
-        <%= radio_button_tag 'add', false %>
-        <% hidden_field(:recipe, :id) %>
+       <%= render :partial => 'form', :locals => {:f => f} %>
         <%= f.submit 'Create Ingredients', :class => "btn btn-primary mt-2" %>
         <%= link_to 'Back to Recipe', user_recipe_path(@recipe.user, @recipe), :class => 'btn btn-primary mt-2' %>
       <% end %>
