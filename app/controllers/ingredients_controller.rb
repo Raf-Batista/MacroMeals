@@ -17,8 +17,8 @@ class IngredientsController < ApplicationController
   end
 
   def destroy
-    ingredient =   Ingredient.find_by(:id => params[:id])
-    recipe = ingredient.recipe_id
+    ingredient = Ingredient.find_by(:id => params[:id])
+    recipe = ingredient.recipe
     ingredient.destroy
     redirect_to new_recipe_ingredient_path(recipe)
   end

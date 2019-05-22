@@ -1,4 +1,5 @@
 class Recipe < ApplicationRecord
+  before_destroy :destroy_ingredients
   validates :name, :presence => true, :uniqueness => {case_sensitive: false}
   validates :directions, :presence => true
   belongs_to :user
@@ -31,6 +32,12 @@ class Recipe < ApplicationRecord
       end
     end
     highest_rating[:recipe]
+  end
+
+  private
+
+  def destroy_ingredients
+    self.ingredients.destroy_all
   end
 
 end
