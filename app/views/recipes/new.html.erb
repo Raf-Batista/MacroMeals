@@ -2,7 +2,7 @@
   <div class="jumbotron">
     <h1 class="text-center">Create a Recipe</h1>
     <div class="form-group">
-      <%= form_for [@user, @recipe] do |f|%>
+      <%= form_for [@recipe.user, @recipe] do |f|%>
         <%= render :partial => 'form', :locals => {:f => f} %>
         <%= f.submit "Create Recipe", :class => "btn btn-primary mt-2" %>
       <% end %>

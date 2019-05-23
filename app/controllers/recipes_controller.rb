@@ -5,8 +5,7 @@ class RecipesController < ApplicationController
       flash[:message] = 'You can not create a recipe, please sign up or login'
       redirect_to login_path and return
     end
-    @user = current_user
-    @recipe = @user.recipes.build
+    @recipe = current_user.recipes.build
   end
 
   def create
@@ -61,7 +60,6 @@ class RecipesController < ApplicationController
     else
       redirect_to root_path, :flash => {:message => 'You are not logged in'}
     end
-
   end
 
   def ten_minute_meals

@@ -10,6 +10,9 @@ class UsersController < ApplicationController
 
   def create
     user = User.create(user_params)
+    if user.errors.any?
+      redirect_to new_user_path, :flash => {:message => "#{user.errors.full_messages.last}"} and return
+    end
     login(user)
     redirect_to user_path(user), :flash => {:message => 'Signed Up Successfully'}
   end
