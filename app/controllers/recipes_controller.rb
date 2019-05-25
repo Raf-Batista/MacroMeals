@@ -43,14 +43,9 @@ class RecipesController < ApplicationController
   end
 
   def destroy
-    if !logged_in?
-      redirect_to login_path and return
-    elsif recipe = current_user.recipes.find_by(:id => params[:id])
-    #  recipe.ingredients.destroy_all
+    if recipe = current_user.recipes.find_by(:id => params[:id])
       recipe.destroy
       redirect_to root_path, :flash => {:message => 'Recipe deleted'} and return
-    else
-      redirect_to root_path, :flash => {:message => 'You are not logged in'}
     end
   end
 
