@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  skip_before_action :require_login, :only => [:new, :create]
+
   def new
     logged_in? ? redirect_to(user_path(current_user), :flash => {:message => 'You are already logged in'}) : render(:new)
   end
@@ -15,12 +17,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    if logged_in?
-      logout
-      redirect_to login_path, :flash => {:message => 'Logout Successful'}
-    else
-      redirect_to login_path, :flash => {:message => 'Can not log out, you are not logged in'}
-    end
+    logout
+    redirect_to login_path, :flash => {:message => 'Logout Successful'}
   end
 
   private

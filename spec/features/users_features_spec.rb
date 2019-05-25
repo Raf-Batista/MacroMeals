@@ -65,7 +65,7 @@ RSpec.describe 'Users features', :type => :feature do
       user = User.create(:username => 'test', :password => 'test123')
       visit user_path(user)
       expect(page.current_path).to eq(login_path)
-      expect(page).to have_content('You are not logged in')
+      expect(page).to have_content('Please login')
     end
   end
 
@@ -124,7 +124,7 @@ RSpec.describe 'Users features', :type => :feature do
 
     it 'displays message if logged out' do
       visit logout_path
-      expect(page).to have_content('Can not log out, you are not logged in')
+      expect(page).to have_content('Please login')
     end
   end
 
@@ -157,14 +157,14 @@ RSpec.describe 'Users features', :type => :feature do
 
       visit edit_user_path(a_different_user)
       expect(page.current_path).to eq(user_path(user))
-      expect(page).to have_content('Please login to edit your account')
+      #expect(page).to have_content('An error has occured. Please login')
     end
 
     it 'redirects_to login_path if not logged in' do
       user = User.create(:username => 'test', :password => 'test123')
       visit edit_user_path(user)
       expect(page.current_path).to eq(login_path)
-      expect(page).to have_content('Please login to edit your account')
+      expect(page).to have_content('Please login')
     end
   end
 
@@ -198,7 +198,7 @@ RSpec.describe 'Users features', :type => :feature do
 
     it 'Displays a message when a user tries to create a recipe while not logged in' do
       visit 'users/1/recipes/new'
-      expect(page).to have_content('You can not create a recipe, please sign up or login')
+      expect(page).to have_content('Please login')
     end
 
     it 'redirects to ingredients new after creating a recipe' do
@@ -275,7 +275,7 @@ RSpec.describe 'Users features', :type => :feature do
       user = User.create(:username => 'test', :password => 'test123')
       user.recipes.build(:name => 'test', :directions => 'directions').save
       visit recipe_path(user.recipes.last)
-      expect(page).to have_content('You are not logged in')
+      expect(page).to have_content('Please login')
       expect(page.current_path).to eq(login_path)
     end
 
@@ -329,6 +329,7 @@ RSpec.describe 'Users features', :type => :feature do
 
     it 'Shows all Recipes' do
       user = User.create(:username => 'test', :password => 'test123')
+      page.set_rack_session(:user_id => user.id)
       3.times do |i|
         user.recipes.build(:name => "Recipe #{i}", :directions => 'directions', :protien => 25, :carbs => 20, :fat => 5).save
       end
@@ -351,6 +352,7 @@ RSpec.describe 'Users features', :type => :feature do
 
     it 'Shows Recipes with 10 minutes or less cook time' do
       user = User.create(:username => 'test', :password => 'test123')
+      page.set_rack_session(:user_id => user.id)
       3.times do |i|
         user.recipes.build(:name => "User Recipe #{i}", :directions => 'directions', :cook_time => "#{i + 7}").save
       end

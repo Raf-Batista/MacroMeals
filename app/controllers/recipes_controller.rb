@@ -1,10 +1,6 @@
 class RecipesController < ApplicationController
 
   def new
-    if !logged_in?
-      flash[:message] = 'You can not create a recipe, please sign up or login'
-      redirect_to login_path and return
-    end
     @recipe = current_user.recipes.build
   end
 
@@ -20,11 +16,7 @@ class RecipesController < ApplicationController
   end
 
   def show
-    if !logged_in?
-      redirect_to login_path, :flash => {:message => 'You are not logged in'} and return
-    else
-      @recipe = Recipe.find_by(:id => params[:id])
-    end
+    @recipe = Recipe.find_by(:id => params[:id])
   end
 
   def index

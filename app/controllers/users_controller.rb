@@ -1,33 +1,26 @@
 class UsersController < ApplicationController
+  skip_before_action :require_login, :only => [:new, :create]
 
   def new
-    if logged_in?
-      redirect_to user_path(current_user), :flash => {:message => 'You are already logged in'}
-    else
-      @user = User.new
-    end
+    redirect_to user_path(current_user), :flash => {:message => 'You are already logged in'} if logged_in?
+    @user = User.new
   end
 
   def create
     user = User.create(user_params)
-    if user.errors.any?
-      redirect_to new_user_path, :flash => {:message => "#{user.errors.full_messages.last}"} and return
-    end
-    login(user)
-    redirect_to user_path(user), :flash => {:message => 'Signed Up Successfully'}
+    user.errors.any? ? redirect_to(new_user_path, :flash => {:message => "#{user.errors.full_messages.last}"}) : login(user)
+    redirect_to user_path(user), :flash => {:message => 'Signed Up Successfully'} and return
   end
 
   def show
-    logged_in? ? @user=(current_user) : redirect_to(login_path, :flash => {:message => 'You are not logged in'})
+    @user= current_user
   end
 
   def edit
-    if !logged_in?
-      redirect_to login_path, :flash => {:message => 'Please login to edit your account'} and return
-    elsif current_user == User.find_by(:id => params[:id])
+    if current_user == User.find_by(:id => params[:id])
       @user =  current_user
     else
-      redirect_to root_path, :flash => {:message => 'Please login to edit your account'} and return
+      redirect_to user_path(current_user)
     end
   end
 
