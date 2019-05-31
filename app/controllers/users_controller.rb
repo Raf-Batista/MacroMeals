@@ -7,9 +7,13 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.create(user_params)
-    user.errors.any? ? redirect_to(new_user_path, :flash => {:message => "#{user.errors.full_messages.last}"}) : login(user)
-    redirect_to user_path(user), :flash => {:message => 'Signed Up Successfully'} and return
+    user = User.new(user_params)
+    if user.save
+      login(user)
+      redirect_to user_path(user), :flash => {:message => 'Signed Up Successfully'} and return
+    else
+      redirect_to(new_user_path, :flash => {:message => "#{user.errors.full_messages.last}"})
+    end 
   end
 
   def show
