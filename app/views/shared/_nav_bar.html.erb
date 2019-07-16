@@ -21,8 +21,14 @@
         </li>
         <% if session[:user_id] %>
           <li class="nav-item">
-              <a class="nav-link" href="/recipes">All Recipes</a>
+              <a class="nav-link" id="all_recipes" href="/recipes">All Recipes</a>
           </li>
         <% end %>
     </ul>
   </nav>
+<script>
+  $('#all_recipes').click((event) => {
+    event.preventDefault();
+    alert('It Worked!');
+  })
+</script>
