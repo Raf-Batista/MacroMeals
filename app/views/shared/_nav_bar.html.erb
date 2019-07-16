@@ -29,6 +29,6 @@
 <script>
   $('#all_recipes').click((event) => {
     event.preventDefault();
-    alert('It Worked!');
+    JSONFormatter.getJSON('/recipes.json');
   })
 </script>
