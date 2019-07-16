@@ -20,6 +20,10 @@ class RecipesController < ApplicationController
 
   def index
     @recipes = Recipe.all
+    respond_to do |format|
+      format.html {render :show}
+      format.json {render json: @recipes.to_json}
+    end
   end
 
   def edit
