@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" id="user_info">
   <div class="jumbotron">
     <% if @user.recipes.empty? %>
         <h2>Hello <%= @user.username %>, you currently have no recipes. Click Create Recipe to create your macro friendly recipe'</h2>
@@ -8,8 +8,14 @@
         <%= link_to recipe.name, user_recipe_path(@user, recipe) %>
       <% end %>
     <% end %>
-    <div class="mt-4">
+    <div class="mt-4" id="user_nav">
       <%= render :partial => 'nav', :locals => {:user => @user} %>
     </div>
+  </div>
+</div>
+
+<div class="container">
+  <div id="recipes">
+
   </div>
 </div>
