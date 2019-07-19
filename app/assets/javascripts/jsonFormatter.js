@@ -1,9 +1,11 @@
 class JSONFormatter {
 
   static parseJSON(data){
-    const userRecipes = [];
+    let userRecipes = [];
     for(let i = 0; i < data.length; i++){
-      userRecipes.push({"id": data[i].id, "user": data[i].user.username, "recipeName": data[i].name, "macros": `Protien: ${data[i].protien}g Carbs: ${data[i].carbs}g Fat: ${data[i].fat}g`})
+      let recipe = data[i];
+      userRecipes.push({"id": recipe.id, "data": `<li>${recipe.user.username} <a href="/recipes/${recipe.id}">${recipe.name}</a> ${recipe.macros}</li>`})
+
     }
     return userRecipes;
   }

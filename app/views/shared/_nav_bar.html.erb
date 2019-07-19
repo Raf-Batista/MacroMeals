@@ -38,7 +38,7 @@
           $('#recipes').append('<ul>')
           for(let i = 0; i < recipes.length; i++){
             const recipe = recipes[i];
-            $('#recipes').append(`<li>${recipe.user} <a href="/recipes/${recipe.id}"> ${recipe.recipeName}</a> ${recipe.macros}</li>`)
+            $('#recipes').append(recipe.data)
           }
           $('#recipes').append('</ul>')
        })
