@@ -19,4 +19,5 @@ class IngredientsController < ApplicationController
     ingredient.destroy
     redirect_to new_recipe_ingredient_path(recipe)
   end
+
 end
