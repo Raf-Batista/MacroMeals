@@ -28,13 +28,13 @@
   </nav>
 <script type="text/javascript" charset="utf-8">
   $(document).ready(
-  function(){
+  () => {
     let recipes;
     $('#all_recipes').click((event) => {
        event.preventDefault();
        $('#user_info').hide();
        $.get('/recipes.json', (data) => {
-          let recipes = JSONFormatter.parseJSON(data);
+          let recipes = JSONFormatter.parseJSONIndex(data);
           $('#recipes').append('<ul>')
           for(let i = 0; i < recipes.length; i++){
             const recipe = recipes[i];
@@ -44,9 +44,14 @@
        })
     });
     $(document).on("click", "#recipes a", (e) => {
-      event.preventDefault();
-      $('#recipes').hide();
+      e.preventDefault();
+      $.get(e.target.href, (data) => {
+        let recipe = JSONFormatter.parseJSONShow(data);
+        $('#recipe').append(recipe);
+      })
+       $('#recipes').hide();
 
     });
 });
+
 </script>
