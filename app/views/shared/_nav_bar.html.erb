@@ -43,6 +43,9 @@
           $('#recipes').append('</ul>')
        })
     });
-    }
-  )
+    $(document).on("click", "#recipes a", (e) => {
+      event.preventDefault();
+      $('#recipes').hide();
+    });
+});
 </script>
