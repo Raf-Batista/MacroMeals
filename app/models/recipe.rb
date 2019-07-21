@@ -13,7 +13,7 @@ class Recipe < ApplicationRecord
   scope :max_fat, lambda { Recipe.order(:fat => :desc) }
 
   def macros
-    "protien: #{self.protien}g carbs: #{self.carbs}g fat: #{self.fat}g"
+    "Protien: #{self.protien}g Carbs: #{self.carbs}g Fat: #{self.fat}g"
   end
 
   def avg_rating

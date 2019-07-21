@@ -3,7 +3,7 @@ class JSONFormatter {
   static parseJSONIndex(data){
     let userRecipes = [];
     for(let i = 0; i < data.length; i++){
-      let recipe = data[i];
+      const recipe = data[i];
       userRecipes.push({"id": recipe.id, "data": `<li><a href="/recipes/${recipe.id}.json">${recipe.name}</a> ${recipe.macros}</li>`})
 
     }
@@ -11,6 +11,19 @@ class JSONFormatter {
   }
 
   static parseJSONShow(data){
-    return `<li>${data.name} ${data.macros} ${data.ingredients} ${data.prep_time} ${data.cook_time} ${data.directions}</li>`
+
+    function getIngredients(recipe){
+      let ingredients = '';
+      const recipes = recipe.ingredients;
+      for(let i = 0; i < recipes.length; i++){
+        ingredients += `<p>${recipes[i].item.name}: ${recipes[i].quantity}</p> `
+      }
+      ingredients += '</ul>'
+      return ingredients;
+    }
+
+     const ingredients = getIngredients(data);
+    return `<p>${data.name}</p> ${ingredients} <p>${data.macros}</p> <p> Prep Time: ${data.prep_time}</p> <p>Cook Time: ${data.cook_time}</p> <p> Directions: ${data.directions}</p>`
   }
+
 }

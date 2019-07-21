@@ -48,7 +48,7 @@
       $.get(e.target.href, (data) => {
         let recipe = JSONFormatter.parseJSONShow(data);
         $('#recipe').append(recipe);
-      })
+      });
        $('#recipes').hide();
 
     });
