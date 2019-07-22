@@ -1,4 +1,4 @@
-<div class="container" id="user_info">
+<div class="container" id="hide">
   <div class="jumbotron">
     <% if @user.recipes.empty? %>
         <h2>Hello <%= @user.username %>, you currently have no recipes. Click Create Recipe to create your macro friendly recipe'</h2>
@@ -14,9 +14,4 @@
   </div>
 </div>
 
-<div class="container">
-  <div id="recipes">
-  </div>
-  <div id="recipe">
-  </div>
-</div>
+<%= render :partial => 'shared/div'  %>
