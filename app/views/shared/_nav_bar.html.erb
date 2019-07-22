@@ -17,7 +17,7 @@
           </li>
         <% end %>
         <li class="nav-item">
-            <a class="nav-link" href="/about">About</a>
+            <a class="nav-link" id="about" href="/about">About</a>
         </li>
         <% if session[:user_id] %>
           <li class="nav-item">
@@ -31,7 +31,6 @@
   () => {
     $('#all_recipes').click((event) => {
       $('#recipes').empty();
-      $('#recipe').empty();
       event.preventDefault();
       $('#hide').hide();
       $.get('/recipes.json', (data) => {
@@ -44,15 +43,12 @@
         $('#recipes').append('</ul>')
      });
   });
-    $(document).on("click", "#recipes a", (e) => {
-      e.preventDefault();
-      $.get(e.target.href, (data) => {
+    $(document).on("click", "#recipes a", (event) => {
+      event.preventDefault();
+      $.get(event.target.href, (data) => {
         const recipe = JSONFormatter.parseJSONShow(data);
-        $('#recipe').append(recipe);
+        $('#recipes').html(recipe);
       });
-       $('#recipes').empty();
-       $('#recipe').empty();
     });
 });
-
 </script>
