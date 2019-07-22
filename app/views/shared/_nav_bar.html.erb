@@ -32,18 +32,18 @@
     $('#all_recipes').click((event) => {
       $('#recipes').empty();
       $('#recipe').empty();
-       event.preventDefault();
-       $('#hide').hide();
-       $.get('/recipes.json', (data) => {
-          const recipes = JSONFormatter.parseJSONIndex(data);
-          $('#recipes').append('<ul>')
-          for(let i = 0; i < recipes.length; i++){
-            const recipe = recipes[i];
-            $('#recipes').append(recipe.data)
-          }
-          $('#recipes').append('</ul>')
-       });
-    });
+      event.preventDefault();
+      $('#hide').hide();
+      $.get('/recipes.json', (data) => {
+        const recipes = JSONFormatter.parseJSONIndex(data);
+        $('#recipes').append('<ul>')
+        for(let i = 0; i < recipes.length; i++){
+          const recipe = recipes[i];
+          $('#recipes').append(recipe.data)
+        }
+        $('#recipes').append('</ul>')
+     });
+  });
     $(document).on("click", "#recipes a", (e) => {
       e.preventDefault();
       $.get(e.target.href, (data) => {
@@ -51,6 +51,7 @@
         $('#recipe').append(recipe);
       });
        $('#recipes').empty();
+       $('#recipe').empty();
     });
 });
 
