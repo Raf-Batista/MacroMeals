@@ -34,6 +34,16 @@ class Recipe < ApplicationRecord
     highest_rating[:recipe]
   end
 
+  def create_ingredients(ingredients)
+    ingredients.each do |ingredient|
+      new_ingredient = {}
+      item = Item.find_or_create_by(:name => ingredient[:name])
+      new_ingredient[:item_id] = item.id
+      new_ingredient[:quantity] = ingredient[:quantity]
+      self.ingredients.create(new_ingredient)
+    end
+  end
+
   private
 
   def destroy_ingredients
