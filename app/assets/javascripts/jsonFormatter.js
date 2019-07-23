@@ -26,4 +26,12 @@ class JSONFormatter {
     return `<p>${data.name}</p> ${ingredients} <p>${data.macros}</p> <p> Prep Time: ${data.prep_time}</p> <p>Cook Time: ${data.cook_time}</p> <p> Directions: ${data.directions}</p>`
   }
 
+  static parseJSONPost(data){
+    const arr = [];
+    for(let i = 2; i < data.length; i++){
+      arr.push(  data[i] )
+    }
+      return arr;
+  }
+
 }

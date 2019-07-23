@@ -1,17 +1,18 @@
 class RecipesController < ApplicationController
-
+skip_before_action :verify_authenticity_token
   def new
     @recipe = current_user.recipes.build
   end
 
   def create
-    @recipe = current_user.recipes.build(recipe_params)
-    if @recipe.save
-      redirect_to new_recipe_ingredient_path(@recipe)
-    else
-      flash[:warning] = @recipe.errors.full_messages.join(', ')
-      render :new
-    end
+binding.pry
+    @recipe = current_user.recipes.build(recipe_params).save
+    # if @recipe.save
+    #   redirect_to new_recipe_ingredient_path(@recipe) if !request.xhr?
+    # else
+    #   flash[:warning] = @recipe.errors.full_messages.join(', ')
+    #   render :new
+    # end
   end
 
   def show

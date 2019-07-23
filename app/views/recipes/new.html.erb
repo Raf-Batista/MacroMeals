@@ -4,8 +4,42 @@
     <div class="form-group">
       <%= form_for [@recipe.user, @recipe] do |f|%>
         <%= render :partial => 'form', :locals => {:f => f} %>
-        <%= f.submit "Create Recipe", :class => "btn btn-primary mt-2" %>
+        <%= f.submit "Create Recipe", :class => "btn btn-primary mt-2", :id => "new_submit" %>
       <% end %>
     </div>
   </div>
 </div>
+<script type="text/javascript" charset="utf-8">
+
+  $('#new_submit').click((event) => {
+    event.preventDefault();
+    const data = $('form').serializeArray();
+    let recipe = JSONFormatter.parseJSONPost(data);
+    $.post('/recipes', recipe, function(data){
+    console.log(data)
+    });
+  });
+</script>
+
+
+
+
+
+
+<!-- <script type="text/javascript" charset="utf-8">
+  $('#new_submit').click((event) => {
+    event.preventDefault();
+    const formData = $('form').serializeArray();
+    $.ajax({ url: '/recipes',
+      type: 'POST',
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      data: formData,
+      success: function(response) {
+        $('form').hide()
+        $('#recipes').html(response);
+        console.log(response)
+
+      }
+    });
+  });
+</script> -->
