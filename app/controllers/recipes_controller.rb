@@ -5,8 +5,14 @@ skip_before_action :verify_authenticity_token
   end
 
   def create
-binding.pry
-    @recipe = current_user.recipes.build(recipe_params).save
+    @recipe = current_user.recipes.build(recipe_params)
+    @recipe.save
+    binding.pry
+    # ingredient_params.each do |ingredient|
+    #   @recipe.ingredients.build(ingredient).save
+    # end
+    #   binding.pry
+    render json: @recipe
     # if @recipe.save
     #   redirect_to new_recipe_ingredient_path(@recipe) if !request.xhr?
     # else
@@ -82,7 +88,31 @@ binding.pry
   end
 
   def ingredient_params
-    params.require(:ingredient).each {|ingredient| ingredient.permit(:name, :quantity)}
+    params.require(:recipe).permit(:ingredient => [:name, :quantity])
   end
 
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
+#
+#
+#
+#
+#

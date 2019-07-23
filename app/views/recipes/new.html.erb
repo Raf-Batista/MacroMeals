@@ -4,6 +4,17 @@
     <div class="form-group">
       <%= form_for [@recipe.user, @recipe] do |f|%>
         <%= render :partial => 'form', :locals => {:f => f} %>
+        <label for="[recipe]ingredient[][name]">Item Name</label>
+        <input type="text" name="[recipe]ingredient[][name]">
+
+        <label for="[recipe]ingredient[][quantity]">Item Quantity</label>
+        <input type="text" name="[recipe]ingredient[][quantity]">
+
+        <label for="[recipe]ingredient[][name]">Item Name</label>
+        <input type="text" name="[recipe]ingredient[][name]">
+
+        <label for="[recipe]ingredient[][quantity]">Item Quantity</label>
+        <input type="text" name="[recipe]ingredient[][quantity]">
         <%= f.submit "Create Recipe", :class => "btn btn-primary mt-2", :id => "new_submit" %>
       <% end %>
     </div>
@@ -14,8 +25,10 @@
   $('#new_submit').click((event) => {
     event.preventDefault();
     const data = $('form').serializeArray();
-    let recipe = JSONFormatter.parseJSONPost(data);
-    $.post('/recipes', recipe, function(data){
+    let recipeData = JSONFormatter.prepJSONPost(data);
+    $.post('/recipes', recipeData, function(data){
+      let recipe = JSONFormatter.parseJSONPost(data);
+    $('#recipes').text(data)
     console.log(data)
     });
   });
