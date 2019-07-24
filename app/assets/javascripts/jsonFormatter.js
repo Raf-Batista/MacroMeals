@@ -35,7 +35,16 @@ class JSONFormatter {
   }
 
   static parseJSONPost(data){
-    return
+    console.log(data.ingredients)
+    if(data){
+      let ingredients = ''
+      for(let i = 0; i < data.ingredients.length; i++){
+        ingredients += `<p>${data.ingredients[i].item.name} ${data.ingredients[i].quantity} </p>`
+      }
+      console.log(ingredients)
+      return `<p> Name: ${data.name}</p> Ingredients: ${ingredients} <p> Macros: ${data.macros}</p> <p> Prep Time: ${data.prep_time}</p> <p>Cook Time: ${data.cook_time}</p> <p> Directions: ${data.directions}</p>`
+    }
   }
+
 
 }

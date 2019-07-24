@@ -1,20 +1,20 @@
-<div class="container">
+<div class="container" id="hide">
   <div class="jumbotron">
     <h1 class="text-center">Create a Recipe</h1>
     <div class="form-group">
       <%= form_for [@recipe.user, @recipe] do |f|%>
         <%= render :partial => 'form', :locals => {:f => f} %>
         <label for="[recipe]ingredient[][name]">Item Name</label>
-        <input type="text" name="[recipe]ingredient[][name]">
+        <input type="text" name="[recipe]ingredient[][name]" value="ingredient1">
 
         <label for="[recipe]ingredient[][quantity]">Item Quantity</label>
-        <input type="text" name="[recipe]ingredient[][quantity]">
+        <input type="text" name="[recipe]ingredient[][quantity]" value=0>
 
         <label for="[recipe]ingredient[][name]">Item Name</label>
-        <input type="text" name="[recipe]ingredient[][name]">
+        <input type="text" name="[recipe]ingredient[][name]" value="ingredient2">
 
         <label for="[recipe]ingredient[][quantity]">Item Quantity</label>
-        <input type="text" name="[recipe]ingredient[][quantity]">
+        <input type="text" name="[recipe]ingredient[][quantity]" value=0>
         <%= f.submit "Create Recipe", :class => "btn btn-primary mt-2", :id => "new_submit" %>
       <% end %>
     </div>
@@ -28,8 +28,8 @@
     let recipeData = JSONFormatter.prepJSONPost(data);
     $.post('/recipes', recipeData, function(data){
       let recipe = JSONFormatter.parseJSONPost(data);
-    $('#recipes').text(data)
-    console.log(data)
+      $('#hide').hide();
+    $('#recipes').html(recipe)
     });
   });
 </script>

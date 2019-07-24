@@ -9,6 +9,7 @@ skip_before_action :verify_authenticity_token
     @recipe.save
     @recipe.create_ingredients(ingredient_params[:ingredient])
     redirect_to new_recipe_ingredient_path(@recipe) if !request.xhr?
+    render json: @recipe
     # else
     #   flash[:warning] = @recipe.errors.full_messages.join(', ')
     #   render :new
