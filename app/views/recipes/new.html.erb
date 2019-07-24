@@ -5,16 +5,16 @@
       <%= form_for [@recipe.user, @recipe] do |f|%>
         <%= render :partial => 'form', :locals => {:f => f} %>
         <label for="[recipe]ingredient[][name]">Item Name</label>
-        <input type="text" name="[recipe]ingredient[][name]" value="ingredient1">
+        <input type="text" name="[recipe]ingredient[][name]" placeholder="ingredient1">
 
         <label for="[recipe]ingredient[][quantity]">Item Quantity</label>
-        <input type="text" name="[recipe]ingredient[][quantity]" value=0>
+        <input type="text" name="[recipe]ingredient[][quantity]" placeholder="0">
 
         <label for="[recipe]ingredient[][name]">Item Name</label>
-        <input type="text" name="[recipe]ingredient[][name]" value="ingredient2">
+        <input type="text" name="[recipe]ingredient[][name]" placeholder="ingredient2">
 
         <label for="[recipe]ingredient[][quantity]">Item Quantity</label>
-        <input type="text" name="[recipe]ingredient[][quantity]" value=0>
+        <input type="text" name="[recipe]ingredient[][quantity]" placeholder=0>
         <%= f.submit "Create Recipe", :class => "btn btn-primary mt-2", :id => "new_submit" %>
       <% end %>
     </div>

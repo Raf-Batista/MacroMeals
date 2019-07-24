@@ -7,7 +7,7 @@ skip_before_action :verify_authenticity_token
   def create
     @recipe = current_user.recipes.build(recipe_params)
     @recipe.save
-    @recipe.create_ingredients(ingredient_params[:ingredient])
+    @recipe.create_ingredients(ingredient_params[:ingredient]) if params[:ingredient]
     redirect_to new_recipe_ingredient_path(@recipe) if !request.xhr?
     render json: @recipe
     # else
